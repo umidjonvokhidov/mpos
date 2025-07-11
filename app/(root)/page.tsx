@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Loading from '../loading';
-import { Axis3D } from 'lucide-react';
 
 const Dashboard = () => {
   const router = useRouter();
@@ -26,6 +25,7 @@ const Dashboard = () => {
               Authorization: `Bearer ${token}`,
             },
           });
+
           setUser(res.data.user);
           console.log(res);
         }
@@ -33,16 +33,26 @@ const Dashboard = () => {
         setLoading(false);
       } catch (error: any) {
         if (error.response && error.response.status === 401) {
-          // router.push('/sign-in');
-          const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`);
-          console.log(res);
+          const accessTokenRes = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
+            {},
+            { withCredentials: true },
+          );
+          localStorage.setItem("accessToken", accessTokenRes.data.accessToken);
+          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
+            headers: {
+              Authorization: `Bearer ${accessTokenRes.data.accessToken}`,
+            },
+          });
+          
+          setUser(res.data.user);
+          setLoading(false);
         }
-        // console.log(error);
       }
     };
 
     fetchUser();
-  }, [router, loading, setLoading]);
+  }, []);
 
   return loading ? (
     <Loading />
