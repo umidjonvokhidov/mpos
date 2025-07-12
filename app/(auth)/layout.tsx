@@ -1,15 +1,63 @@
 'use client';
 
 import { features } from '@/constants';
+import { useAuth, useUI } from '@/stores';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import Loading from '../loading';
 
 const AuthLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
-  return (
+  const { user, isAuthenticated, fetchUser, fetchRefreshToken } = useAuth();
+  const router = useRouter();
+  const { setIsLoading, isLoading } = useUI();
+
+  useEffect(() => {
+    setIsLoading(true);
+    const checkAuth = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+
+        if (accessToken && !isAuthenticated) {
+          const user = await fetchUser();
+
+          if (!user) {
+            await fetchRefreshToken();
+            const retryUser = await fetchUser();
+
+            if (retryUser) {
+              router.push('/');
+              return;
+            }
+          } else {
+            router.push('/');
+            return;
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, [fetchUser, fetchRefreshToken, isAuthenticated, router, setIsLoading]);
+
+  useEffect(() => {
+    if (user && isAuthenticated) {
+      router.push('/');
+    }
+  }, [user, isAuthenticated, router]);
+
+  return isLoading ? (
+    <Loading />
+  ) : (
     <main className="grid grid-cols-1 lg:grid-cols-2 p-2.5 h-screen">
       <div>{children}</div>
       <div className="bg-[radial-gradient(60.21%_42.58%_at_50%_50%,_#141C30_0%,_#050810_100%)] rounded-[10px] lg:flex flex-col items-center justify-between h-full hidden">

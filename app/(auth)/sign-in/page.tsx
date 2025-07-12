@@ -19,6 +19,8 @@ import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useAuth } from '@/stores';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -27,6 +29,8 @@ const formSchema = z.object({
 });
 
 const SignIn = () => {
+  const router = useRouter();
+  const { login } = useAuth();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,9 +40,16 @@ const SignIn = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const { email, password, remember } = values;
+      const success = await login(email, password, remember);
+
+      if (success) router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="flex h-screen w-full justify-center items-center">
@@ -89,8 +100,8 @@ const SignIn = () => {
                       Remember account
                     </FormLabel>
                   </div>
-                  <Link href="" className="text-body-sm-regular text-grey-600">
-                    Forget Password
+                  <Link href="/forgot-password" className="text-body-sm-regular text-grey-600">
+                    Forgot Password
                   </Link>
                 </FormItem>
               )}

@@ -11,6 +11,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useAuth } from '@/stores';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z
   .object({
@@ -26,6 +28,8 @@ const formSchema = z
   });
 
 const SignUp = () => {
+  const router = useRouter();
+  const { register } = useAuth();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,8 +41,15 @@ const SignUp = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const { email, firstname, lastname, password } = values;
+      const success = await register(firstname, lastname, email, password);
+
+      if (success) router.push('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -123,7 +134,7 @@ const SignUp = () => {
             </Button>
           </form>
           <p className="text-body-md-regular text-grey-600">
-            You Don’t have account ?{' '}
+            You Don't have account ?{' '}
             <Link href="/sign-in" className="font-bold text-base-black">
               Sign In
             </Link>
