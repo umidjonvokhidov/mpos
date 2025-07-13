@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 import React from 'react';
+import Navbar from '@/components/Navbar';
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const router = useRouter();
@@ -61,8 +62,8 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return isLoading ? (
     <Loading />
   ) : (
-    <main>
-      <h1 className="text-5xl text-purple-900">Root Layout</h1>
+    <main className="p-2.5 bg-[#EDEEEF] h-screen">
+      <Navbar />
       {children}
     </main>
   );

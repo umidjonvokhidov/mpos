@@ -75,7 +75,7 @@ const verifyOTP = () => {
   }, [fetchUser, router]);
 
   return (
-    <div className="flex h-screen w-full justify-center items-center">
+    <div className="flex h-full w-full justify-center items-center">
       <Form {...form}>
         <div className="flex flex-col items-center w-10/12  sm:w-1/2 gap-y-4">
           <div className="flex flex-col items-center">
