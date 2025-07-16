@@ -17,6 +17,12 @@ declare interface AuthStore {
   resetPassword: (newPassword: string) => Promise<boolean>;
 }
 
+declare interface NotificationStore {
+  notifications: Notification[] | null;
+  fetchNotifications: (id: string) => Promise<Notification[] | undefined>;
+  markNotificationRead: (id: string, userID: string) => Promise<boolean>;
+  markAllNotificationsRead: (id: string) => Promise<boolean>;
+}
 declare interface UIStore {
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;

@@ -1,9 +1,7 @@
-import type { Types } from "mongoose";
+declare type ProductCategory = 'Drink' | 'Food' | 'Dessert' | 'Stick' | 'Other';
 
-export type ProductCategory = "Drink" | "Food" | "Dessert" | "Stick" | "Other";
-
-export interface Product {
-  _id?: Types.ObjectId | string;
+declare interface Product {
+  _id?: string;
   name: string;
   description: string;
   price: number;
@@ -11,7 +9,7 @@ export interface Product {
   image: string;
   ingredients: string[];
   stock: number;
-  createdBy: Types.ObjectId | string;
+  createdBy: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

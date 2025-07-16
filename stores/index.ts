@@ -1,8 +1,10 @@
 import { useAuthStore } from './auth.store';
 import { useUIStore } from './ui.store';
+import { useNotificationStore } from './notification.store';
 
 export { useAuthStore } from './auth.store';
 export { useUIStore } from './ui.store';
+export { useNotificationStore } from './notification.store';
 
 export const useAuth = () => {
   const user = useAuthStore((state: AuthStore) => state.user);
@@ -32,7 +34,6 @@ export const useAuth = () => {
   };
 };
 
-// Custom hook to get UI state
 export const useUI = () => {
   const isLoading = useUIStore((state: UIStore) => state.isLoading);
   const setIsLoading = useUIStore((state: UIStore) => state.setIsLoading);
@@ -40,5 +41,19 @@ export const useUI = () => {
   return {
     isLoading,
     setIsLoading,
+  };
+};
+
+export const useNotification = () => {
+  const notifications = useNotificationStore((state: NotificationStore) => state.notifications);
+  const fetchNotifications = useNotificationStore((state: NotificationStore) => state.fetchNotifications);
+  const markNotificationRead = useNotificationStore((state: NotificationStore) => state.markNotificationRead);
+  const markAllNotificationsRead = useNotificationStore((state: NotificationStore) => state.markAllNotificationsRead);
+
+  return {
+    notifications,
+    fetchNotifications,
+    markNotificationRead,
+    markAllNotificationsRead,
   };
 };

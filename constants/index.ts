@@ -30,3 +30,48 @@ export const navItems: NavItem[] = [
   { name: 'Transaction', path: '/transactions' },
   { name: 'Report', path: '/reports' },
 ];
+
+export const notifications: NotificationType[] = [
+  {
+    id: 1,
+    title: 'The Payment Purwa is Success',
+    description: 'You can add components to your app using the cli.',
+    status: 'Success',
+    read: false,
+  },
+  {
+    id: 2,
+    title: 'The Payment Rudi is Success',
+    description: 'You can add components to your app using the cli.',
+    status: 'Success',
+    read: false,
+  },
+  {
+    id: 3,
+    title: 'The Payment Rudi is Pending',
+    description: 'You can add components to your app using the cli.',
+    status: 'Pending',
+    read: false,
+  },
+  {
+    id: 4,
+    title: 'The Payment Dina is Pending',
+    description: 'You can add components to your app using the cli.',
+    status: 'Pending',
+    read: false,
+  },
+  {
+    id: 5,
+    title: 'The Payment Rifqi is Pending',
+    description: 'You can add components to your app using the cli.',
+    status: 'Pending',
+    read: true,
+  },
+  {
+    id: 6,
+    title: 'The Payment Deni is Pending',
+    description: 'You can add components to your app using the cli.',
+    status: 'Pending',
+    read: true,
+  },
+];

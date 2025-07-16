@@ -84,7 +84,7 @@ const GlobalLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body className={`${satoshi.variable} ${inter.variable} antialiased`}>
+      <body className={`${satoshi.variable} ${inter.variable} max-h-screen h-screen antialiased`}>
         <Toaster position="bottom-right" richColors />
         {children}
       </body>

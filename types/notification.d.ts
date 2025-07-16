@@ -1,9 +1,7 @@
-import type { Types } from "mongoose";
+declare type NotificationStatus = 'unread' | 'read';
+declare type NotificationType = 'product_update' | 'order_status' | 'system';
 
-export type NotificationStatus = "unread" | "read";
-export type NotificationType = "product_update" | "order_status" | "system";
-
-export interface Notification {
+declare interface Notification {
   _id?: string;
   user: string;
   title: string;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth, useUI } from '@/stores';
+import { useAuth, useNotification, useUI } from '@/stores';
 import Loading from '../loading';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -11,6 +11,7 @@ import Navbar from '@/components/Navbar';
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const router = useRouter();
   const { fetchUser, isAuthenticated, fetchRefreshToken, user } = useAuth();
+  const { fetchNotifications } = useNotification();
   const { setIsLoading, isLoading } = useUI();
   const prevAuthRef = React.useRef(isAuthenticated);
 
@@ -36,11 +37,17 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
 
         if (accessToken && !isAuthenticated) {
           const user = await fetchUser();
+          if (user && user._id) {
+            await fetchNotifications(user._id);
+          }
 
           if (!user) {
             await fetchRefreshToken();
             const retryUser = await fetchUser();
-
+            if (retryUser && retryUser._id) {
+              await fetchNotifications(retryUser._id);
+            }
+            
             if (!retryUser) {
               router.push('/sign-in');
             }
@@ -62,7 +69,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return isLoading ? (
     <Loading />
   ) : (
-    <main className="p-2.5 bg-[#EDEEEF] h-screen">
+    <main className="p-2.5 bg-[#EDEEEF] h-full flex flex-col">
       <Navbar />
       {children}
     </main>

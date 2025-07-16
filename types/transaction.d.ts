@@ -1,23 +1,21 @@
-import type { Types } from "mongoose";
-
-export type TransactionProduct = {
+declare type TransactionProduct = {
   productId: string;
   count: number;
   price: number;
 };
 
-export type PaymentDetails = {
+declare type PaymentDetails = {
   PaymentId?: string;
   receiptUrl?: string;
   gatewayResponse?: any;
 };
 
-export type TransactionStatus = "pending" | "completed" | "declined";
-export type PaymentStatus = "pending" | "completed" | "failed";
-export type TypeService = "Delivery" | "Take Away" | "Dine In";
-export type PaymentMethod = "Credit Card" | "PayPal" | "Cash" | "Apple Pay" | "Google Pay";
+declare type TransactionStatus = 'pending' | 'completed' | 'declined';
+declare type PaymentStatus = 'pending' | 'completed' | 'failed';
+declare type TypeService = 'Delivery' | 'Take Away' | 'Dine In';
+declare type PaymentMethod = 'Credit Card' | 'PayPal' | 'Cash' | 'Apple Pay' | 'Google Pay';
 
-export interface Transaction {
+declare interface Transaction {
   _id?: string;
   userID: string;
   fullname: string;

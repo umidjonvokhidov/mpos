@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -142,7 +142,6 @@ body {
   --color-neutral-grey-100: #f1f2f3;
   --color-neutral-grey-50: #fafafa;
 }
-
 
 :root {
   --swiper-pagination-color: var(--color-base-white);
