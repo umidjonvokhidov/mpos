@@ -1,3 +1,5 @@
+import icons from "@/public/icons";
+
 export const features: FeatureType[] = [
   {
     image: '/images/weekly-statistics.png',
@@ -73,5 +75,48 @@ export const notifications: NotificationType[] = [
     description: 'You can add components to your app using the cli.',
     status: 'Pending',
     read: true,
+  },
+];
+
+export const statistics: StatisticType[] = [
+  {
+    key: 'orderProcess',
+    icon: icons.box3,
+    title: 'Order Process',
+    value: 5,
+    change: '0,5%',
+    changePositive: true,
+    subValue: '1.300',
+    currency: false,
+    viewAllPath: '/orders/process',
+  },
+  {
+    key: 'totalOrder',
+    icon: icons.bagJob,
+    title: 'Total Order',
+    value: 120,
+    subValue: '$521,00',
+    currency: true,
+    viewAllPath: '/orders',
+  },
+  {
+    key: 'orderDone',
+    icon: icons.box5,
+    title: 'Order Done',
+    value: 40,
+    subValue: '$521,00',
+    currency: true,
+    viewAllPath: '/orders/done',
+  },
+  {
+    key: 'totalIncome',
+    icon: icons.dolar,
+    title: 'Total Income',
+    value: '$1.200,00',
+    change: '0,5%',
+    changePositive: true,
+    subValue: '$1.234,00',
+    currency: true,
+    viewAllPath: '/income',
   },
 ];

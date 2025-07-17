@@ -25,17 +25,19 @@ const Notification = () => {
           />
         </div>
       </PopoverTrigger>
-      <PopoverContent className="absolute -right-4 mt-2.5 w-[470px]">
-        <h3 className="text-body-md-medium text-[#0B0B0B] py-3 px-4">Notification</h3>
+      <PopoverContent className="absolute -right-4 mt-2.5 w-[350px] lg:w-[470px]">
+        <h3 className="text-sm font-medium leading-[18px] tracking-tight text-[#0B0B0B] py-2 px-3  lg:py-3 lg:px-4">
+          Notification
+        </h3>
         <Separator className="w-full" />
-        <div className="flex flex-col py-2.5 px-3 gap-y-2.5">
+        <div className="flex flex-col py-1.5 px-2 lg:py-2.5 lg:px-3 gap-y-2.5">
           <div className="flex w-full items-center justify-between">
-            <h3 className="text-body-md-medium text-[#0B0B0B]">
+            <h3 className="text-sm font-medium leading-[18px] tracking-tight text-[#0B0B0B]">
               {notifications ? notifications.length : 0} Notifications
             </h3>
             <h3
               className={twMerge(
-                'text-body-md-medium text-[#0B0B0B]',
+                'text-sm font-medium leading-[18px] tracking-tight text-[#0B0B0B]',
                 unreadNotificationsLength! > 0 && 'cursor-pointer',
               )}
               onClick={async () => {
@@ -65,8 +67,12 @@ const Notification = () => {
                   <Image src={icons.notIcon} alt="Notification" width={24} height={24} />
                 </div>
                 <div className="flex flex-col items-start gap-y-1">
-                  <h5 className="text-body-sm-medium text-base-black">{title}</h5>
-                  <p className="text-[#828896] text-body-sm-regular">{message}</p>
+                  <h5 className="text-xs font-medium leading-4 tracking-tight text-base-black">
+                    {title}
+                  </h5>
+                  <p className="text-[#828896] text-xs font-normal leading-4 tracking-tight">
+                    {message}
+                  </p>
                 </div>
               </div>
             ))}

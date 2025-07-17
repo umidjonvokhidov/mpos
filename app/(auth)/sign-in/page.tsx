@@ -57,10 +57,8 @@ const SignIn = () => {
         <div className="flex flex-col items-center w-10/12  sm:w-1/2 gap-y-4">
           <div className="flex flex-col items-center">
             <Image src="images/Logo.svg" alt="Logo" width={30} height={30} className="mb-2.5" />
-            <h4 className="text-title-xs-medium mb-2">Welcome Back!</h4>
-            <p className="text-body-md-regular text-grey-600">
-              Please Enter your detail to sign in
-            </p>
+            <h4 className="text-2xl font-medium leading-10 tracking-tight mb-2">Welcome Back!</h4>
+            <p className="text-sm font-normal leading-[18px] tracking-tight text-gray-600">Please Enter your detail to sign in</p>
           </div>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-y-2.5">
             <FormField
@@ -96,11 +94,11 @@ const SignIn = () => {
                     <FormControl>
                       <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                     </FormControl>
-                    <FormLabel className="text-body-sm-regular text-grey-600 cursor-pointer">
+                    <FormLabel className="text-xs font-normal leading-4 tracking-tight text-grey-600 cursor-pointer">
                       Remember account
                     </FormLabel>
                   </div>
-                  <Link href="/forgot-password" className="text-body-sm-regular text-grey-600">
+                  <Link href="/forgot-password" className="text-xs font-normal leading-4 tracking-tight text-grey-600">
                     Forgot Password
                   </Link>
                 </FormItem>
@@ -108,12 +106,12 @@ const SignIn = () => {
             />
             <Button
               type="submit"
-              className="w-full h-[42px] rounded-[6px] mt-1.5 bg-base-black text-body-md-regular text-base-white cursor-pointer"
+              className="w-full h-[42px] rounded-[6px] mt-1.5 bg-base-black text-sm font-normal leading-[18px] tracking-tight text-base-white cursor-pointer"
             >
               Sign In
             </Button>
           </form>
-          <p className="text-body-md-regular text-grey-600">
+          <p className="text-sm font-normal leading-[18px] tracking-tight text-grey-600">
             You Don't have account ?{' '}
             <Link href="/sign-up" className="font-bold text-base-black">
               Sign Up
@@ -124,14 +122,14 @@ const SignIn = () => {
           </span>
           <Button
             type="button"
-            className="w-full h-12 rounded-[6px] bg-base-white border border-grey-100 text-body-md-regular text-base-white hover:bg-grey-50 cursor-pointer"
+            className="w-full h-12 rounded-[6px] bg-base-white border border-grey-100 text-sm font-normal leading-[18px] tracking-tight text-base-white hover:bg-grey-50 cursor-pointer"
           >
             <Link
               href="https://mpos-api-odsd.onrender.com/api/v1/auth/google"
               className="flex items-center w-full justify-center h-full gap-x-1"
             >
               <Image src="icons/google.svg" alt="google" width={24} height={24} />
-              <span className="text-base-black text-body-md-regular">Google</span>
+              <span className="text-base-black text-sm font-normal leading-[18px] tracking-tight">Google</span>
             </Link>
           </Button>
         </div>

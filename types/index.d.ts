@@ -16,3 +16,15 @@ declare interface NotificationType {
   status: 'Success' | 'Pending';
   read: boolean;
 }
+
+declare interface StatisticType {
+  key: string;
+  icon: string;
+  title: string;
+  value: number | string;
+  change?: string;
+  changePositive?: boolean;
+  subValue: string;
+  currency: boolean;
+  viewAllPath: string;
+}

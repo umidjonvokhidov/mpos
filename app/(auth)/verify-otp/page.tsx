@@ -80,8 +80,8 @@ const verifyOTP = () => {
         <div className="flex flex-col items-center w-10/12  sm:w-1/2 gap-y-4">
           <div className="flex flex-col items-center">
             <Image src="images/Logo.svg" alt="Logo" width={30} height={30} className="mb-2.5" />
-            <h4 className="text-title-xs-medium mb-2">Verify OTP</h4>
-            <p className="text-body-md-regular text-grey-600">
+            <h4 className="text-2xl font-medium leading-10 tracking-tight mb-2">Verify OTP</h4>
+            <p className="text-sm font-normal leading-[18px] tracking-tight text-grey-600">
               Please enter the 6-digit OTP sent to your email to verify your identity.
             </p>
           </div>
@@ -115,12 +115,12 @@ const verifyOTP = () => {
             />
             <Button
               type="submit"
-              className="w-full h-[42px] rounded-[6px] mt-1.5 bg-base-black text-body-md-regular text-base-white cursor-pointer"
+              className="w-full h-[42px] rounded-[6px] mt-1.5 bg-base-black text-sm font-normal leading-[18px] tracking-tight text-base-white cursor-pointer"
             >
               Verify Code
             </Button>
           </form>
-          <p className="text-body-md-regular text-grey-600">
+          <p className="text-sm font-normal leading-[18px] tracking-tight text-grey-600">
             Didn't get a code ?{' '}
             <Link href="#" onClick={resendOTP} className="font-bold text-base-black">
               Click to resend

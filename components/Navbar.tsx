@@ -9,7 +9,6 @@ import icons from '@/public/icons';
 import Notification from './Notification';
 import Profile from './Profile';
 import DateTime from './DateTime';
-import { useState } from 'react';
 import {
   Accordion,
   AccordionContent,
@@ -18,10 +17,9 @@ import {
 } from '@/components/ui/accordion';
 
 const Navbar = () => {
-  const [navOpen, setNavOpen] = useState(false);
   const pathname = usePathname();
   return (
-    <nav className="bg-base-white w-full rounded-t-[10px] min-h-14 flex gap-3 justify-between items-center p-2.5 lg:flex-row flex-col">
+    <nav className="bg-base-white w-full rounded-t-[10px] min-h-14 p-2.5 max-w-[1536px] flex gap-3 justify-between items-center lg:flex-row flex-col mx-auto">
       <div className="lg:flex hidden items-center gap-6 w-full justify-between lg:w-auto">
         <Image
           src="/images/logo-light.svg"
@@ -37,7 +35,7 @@ const Navbar = () => {
               <Link
                 href={path}
                 className={twMerge(
-                  'py-2 px-6 text-grey-600 text-body-md-regular rounded-[8px] hover:bg-base-black/80 hover:text-base-white transition-all ease-in-out duration-300',
+                  'py-2 px-6 text-gray-600 text-sm font-normal leading-[18px] tracking-tight rounded-[8px] hover:bg-base-black/80 hover:text-base-white transition-all ease-in-out duration-300',
                   pathname === path && 'bg-base-black text-base-white',
                 )}
               >
@@ -48,10 +46,7 @@ const Navbar = () => {
         </ul>
         <div className="flex items-center lg:hidden gap-3">
           <Notification />
-          <div
-            className="border p-2 cursor-pointer border-grey-100 rounded-[6px]"
-            onClick={() => setNavOpen((prev) => !prev)}
-          >
+          <div className="border p-2 cursor-pointer border-grey-100 rounded-[6px]">
             <Image src={icons.hamburger} width={24} height={24} alt="hamburger" />
           </div>
         </div>
@@ -73,7 +68,7 @@ const Navbar = () => {
                   <Link
                     href={path}
                     className={twMerge(
-                      'py-2 px-6 text-grey-600 text-body-md-regular rounded-[8px] hover:bg-base-black/80 hover:text-base-white transition-all ease-in-out duration-300',
+                      'py-2 px-6 text-gray-600 text-sm font-normal leading-[18px] tracking-tight rounded-[8px] hover:bg-base-black/80 hover:text-base-white transition-all ease-in-out duration-300',
                       pathname === path && 'bg-base-black text-base-white',
                     )}
                   >
@@ -102,7 +97,7 @@ const Navbar = () => {
                   <Link
                     href={path}
                     className={twMerge(
-                      'py-2 px-6 text-grey-600 text-body-md-regular w-full flex  md:w-2/3 mx-auto rounded-[8px] hover:bg-base-black/80 hover:text-base-white transition-all ease-in-out duration-300',
+                      'py-2 px-6 text-gray-600 text-sm font-normal leading-[18px] tracking-tight rounded-[8px] hover:bg-base-black/80 hover:text-base-white transition-all w-full sm:w-10/12 md:w-8/12 mx-auto ease-in-out duration-300',
                       pathname === path && 'bg-base-black text-base-white',
                     )}
                   >

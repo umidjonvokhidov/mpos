@@ -94,7 +94,7 @@ const AuthLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
                   sizes="100vw"
                 />
                 <div className="flex flex-col items-center w-full max-w-[488px]">
-                  <h4 className="text-base-white text-title-xs-medium text-center">{title}</h4>
+                  <h4 className="text-base-white text-2xl font-medium leading-10 tracking-tight text-center">{title}</h4>
                   <p className="font-inter text-grey-700 text-center">{description}</p>
                 </div>
               </div>
