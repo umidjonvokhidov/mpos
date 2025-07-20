@@ -9,7 +9,7 @@ const Statistics = () => {
   const { user } = useAuth();
 
   return (
-    <section className="flex flex-col gap-y-5 mx-auto bg-base-black rounded-[12px] p-2.5 lg:p-6">
+    <section className="flex flex-col gap-y-5 mx-auto bg-base-black w-full rounded-[12px] p-2.5 lg:p-6">
       <div className="flex items-start flex-col lg:flex-row lg:justify-between lg:items-center gap-y-4">
         <div className="flex w-full items-start flex-col   gap-y-2.5">
           <h3 className="text-2xl lg:text-4xl font-normal  text-base-white">
