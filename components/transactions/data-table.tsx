@@ -53,7 +53,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   });
 
   return (
-    <div className="flex flex-col gap-3 border border-grey-100 p-2.5 rounded-[6px] h-full">
+    <div className="flex flex-col gap-3 border border-grey-100 p-2.5 rounded-[6px] h-full overflow-hidden">
       <div className="flex items-center gap-3">
         <Select>
           <SelectTrigger className="w-full border-neutral-grey-300 rounded-[6px]">
@@ -93,15 +93,15 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           className="pl-9"
         />
       </div>
-      <div className="flex flex-col gap-y-4 h-full">
+      <div className="flex flex-col gap-y-4 h-full overflow-hidden">
         <div className="flex justify-between items-center">
           <h3 className="font-medium text-lg">Recent Transaction</h3>
           <Link href="/transactions" className="text-sm font-normal text-blue-400">
             View all
           </Link>
         </div>
-        <div className="overflow-y-scroll h-[330px] py-4">
-          <Table className="rounded-2xl px-3">
+        <div className=" h-full overflow-y-auto py-4">
+          <Table className="rounded-2xl px-3 h-full">
             <TableHeader className="py-3 h-12">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>

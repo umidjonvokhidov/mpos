@@ -21,7 +21,7 @@ interface Category {
 const ProductsContainer = () => {
   const { products } = useProduct();
   return (
-    <div className="bg-base-white p-2.5 flex flex-col gap-y-1.5 w-full flex-1 h-full">
+    <div className="bg-base-white p-2.5 flex flex-col gap-y-1.5 w-full flex-1 h-full overflow-hidden rounded-b-[6px]">
       <div className="flex flex-col gap-y-2.5">
         <div className="relative">
           <Input
@@ -56,7 +56,7 @@ const ProductsContainer = () => {
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-full overflow-y-auto">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-full flex-1 overflow-y-auto">
         {products && products.length > 0 ? (
           products.map((product: Product) => <ProductCard key={product._id} product={product} />)
         ) : (

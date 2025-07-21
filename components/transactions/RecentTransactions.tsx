@@ -135,11 +135,7 @@ async function getData(): Promise<TransactionsTable[]> {
 
 const RecentTransactions = async () => {
   const data = await getData();
-  return (
-    <div>
-      <DataTable columns={columns} data={data} />
-    </div>
-  );
+  return <DataTable columns={columns} data={data} />;
 };
 
 export default RecentTransactions;
