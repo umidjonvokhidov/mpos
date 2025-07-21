@@ -19,7 +19,7 @@ import {
 const Navbar = () => {
   const pathname = usePathname();
   return (
-    <nav className="bg-base-white w-full rounded-t-[10px] min-h-14 p-2.5 max-w-[1536px] flex gap-3 justify-between items-center lg:flex-row flex-col mx-auto">
+    <nav className="bg-base-white w-full rounded-t-[10px] min-h-14 p-2.5 max-w-[1536px] flex gap-3 flex-1 justify-between items-center lg:flex-row flex-col mx-auto">
       <div className="lg:flex hidden items-center gap-6 w-full justify-between lg:w-auto">
         <Image
           src="/images/logo-light.svg"

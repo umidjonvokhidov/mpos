@@ -1,7 +1,14 @@
+'use client';
+import Cart from '@/components/Cart';
+import ProductsContainer from '@/components/ProductsContainer';
+
 const Products = () => {
   return (
-    <div className="text-purple-500 font-bold text-5xl">Products</div>
-  )
-}
+    <section className="grid grid-cols-1 lg:grid-cols-[1fr_300px] max-w-[1536px] mx-auto w-full grid-rows-1 h-full">
+      <ProductsContainer />
+      <Cart />
+    </section>
+  );
+};
 
 export default Products;

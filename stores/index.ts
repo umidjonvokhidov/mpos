@@ -1,10 +1,7 @@
 import { useAuthStore } from './auth.store';
 import { useUIStore } from './ui.store';
 import { useNotificationStore } from './notification.store';
-
-export { useAuthStore } from './auth.store';
-export { useUIStore } from './ui.store';
-export { useNotificationStore } from './notification.store';
+import { useProductStore } from './products.store';
 
 export const useAuth = () => {
   const user = useAuthStore((state: AuthStore) => state.user);
@@ -46,14 +43,30 @@ export const useUI = () => {
 
 export const useNotification = () => {
   const notifications = useNotificationStore((state: NotificationStore) => state.notifications);
-  const fetchNotifications = useNotificationStore((state: NotificationStore) => state.fetchNotifications);
-  const markNotificationRead = useNotificationStore((state: NotificationStore) => state.markNotificationRead);
-  const markAllNotificationsRead = useNotificationStore((state: NotificationStore) => state.markAllNotificationsRead);
+  const fetchNotifications = useNotificationStore(
+    (state: NotificationStore) => state.fetchNotifications,
+  );
+  const markNotificationRead = useNotificationStore(
+    (state: NotificationStore) => state.markNotificationRead,
+  );
+  const markAllNotificationsRead = useNotificationStore(
+    (state: NotificationStore) => state.markAllNotificationsRead,
+  );
 
   return {
     notifications,
     fetchNotifications,
     markNotificationRead,
     markAllNotificationsRead,
+  };
+};
+
+export const useProduct = () => {
+  const products = useProductStore((state: ProductStore) => state.products);
+  const fetchProducts = useProductStore((state: ProductStore) => state.fetchProducts);
+
+  return {
+    products,
+    fetchProducts,
   };
 };

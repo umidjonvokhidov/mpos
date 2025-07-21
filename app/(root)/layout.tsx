@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth, useNotification, useUI } from '@/stores';
+import { useAuth, useNotification, useProduct, useUI } from '@/stores';
 import Loading from '../loading';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -11,8 +11,9 @@ import Navbar from '@/components/Navbar';
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const router = useRouter();
   const { fetchUser, isAuthenticated, fetchRefreshToken, user } = useAuth();
-  const { fetchNotifications } = useNotification();
+  const { fetchNotifications, notifications } = useNotification();
   const { setIsLoading, isLoading } = useUI();
+  const { products, fetchProducts } = useProduct();
   const prevAuthRef = React.useRef(isAuthenticated);
 
   useEffect(() => {
@@ -38,16 +39,17 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
         if (accessToken && !isAuthenticated) {
           const user = await fetchUser();
           if (user && user._id) {
-            await fetchNotifications(user._id);
+            if (notifications?.length! === 0) await fetchNotifications(user._id);
+            if (products?.length! === 0) await fetchProducts();
           }
 
           if (!user) {
             await fetchRefreshToken();
             const retryUser = await fetchUser();
             if (retryUser && retryUser._id) {
-              await fetchNotifications(retryUser._id);
+              if (notifications?.length! === 0) await fetchNotifications(retryUser._id);
+              if (products?.length! === 0) await fetchProducts();
             }
-            
             if (!retryUser) {
               router.push('/sign-in');
             }
@@ -69,7 +71,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return isLoading ? (
     <Loading />
   ) : (
-    <main className="p-2.5 bg-[#EDEEEF] h-full flex flex-col">
+    <main className="p-2.5 bg-[#EDEEEF] flex flex-col flex-1 h-full">
       <Navbar />
       {children}
     </main>

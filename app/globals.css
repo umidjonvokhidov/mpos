@@ -47,6 +47,11 @@ body {
   font-family: var(--font-satoshi);
 }
 
+html body[data-scroll-locked] {
+  overflow: visible !important;
+  margin-right: 0 !important;
+}
+
 @theme grey {
   --color-grey-900: #3a3e45;
   --color-grey-800: #696f7d;
@@ -156,6 +161,7 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-satoshi);
   }
 }
 

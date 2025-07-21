@@ -23,6 +23,11 @@ declare interface NotificationStore {
   markNotificationRead: (id: string, userID: string) => Promise<boolean>;
   markAllNotificationsRead: (id: string) => Promise<boolean>;
 }
+
+declare interface ProductStore {
+  products: Product[] | null;
+  fetchProducts: () => Promise<Product[] | undefined>;
+}
 declare interface UIStore {
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;

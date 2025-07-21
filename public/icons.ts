@@ -42,6 +42,7 @@ const notIcon = '/icons/Not.svg';
 const notification = '/icons/Notification.svg';
 const notificationDot = '/icons/NotificationDot.svg';
 const plus = '/icons/Plus.svg';
+const plusWhite = '/icons/Plus white.svg';
 const search1 = '/icons/Search 1.svg';
 const search2 = '/icons/Search 2.svg';
 const show = '/icons/Show.svg';
@@ -92,6 +93,7 @@ const icons = {
   notIcon,
   notification,
   plus,
+  plusWhite,
   search1,
   search2,
   show,
