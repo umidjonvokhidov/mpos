@@ -21,7 +21,17 @@ interface Category {
 const ProductsContainer = () => {
   const { products } = useProduct();
   return (
-    <div className="bg-base-white p-2.5 flex flex-col gap-y-1.5 w-full flex-1 h-full overflow-hidden rounded-b-[6px]">
+    <div className="bg-base-white p-2.5 flex flex-col gap-y-1.5 w-full flex-1 h-full rounded-b-[6px] relative">
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 15 15"
+        fill="none"
+        className="absolute top-0 -right-[15px]"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M15 0C3 0 0 10 0 15V0H15Z" fill="#fff" />
+      </svg>
       <div className="flex flex-col gap-y-2.5">
         <div className="relative">
           <Input
