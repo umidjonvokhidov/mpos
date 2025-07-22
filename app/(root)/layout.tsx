@@ -71,7 +71,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return isLoading ? (
     <Loading />
   ) : (
-    <main className="p-2.5 bg-[#EDEEEF] flex flex-col flex-1 overflow-hidden">
+    <main className="p-2.5 bg-[#EDEEEF] flex flex-col flex-1 lg:overflow-hidden">
       <Navbar />
       {children}
     </main>

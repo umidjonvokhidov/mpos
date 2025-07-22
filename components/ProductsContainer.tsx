@@ -6,22 +6,25 @@ import Image from 'next/image';
 import icons from '@/public/icons';
 import { Button } from './ui/button';
 import ProductCard from './ProductCard';
+import { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
-const categories: Category[] = [
-  { key: 'all', value: 'All' },
-  { key: 'drinks', value: 'Drinks' },
-  { key: 'food', value: 'Food' },
-];
-
-interface Category {
-  key: string;
-  value: string;
+export enum Categories {
+  All = 'All',
+  Drink = 'Drink',
+  Food = 'Food',
+  Dessert = 'Dessert',
+  Stick = 'Stick',
 }
 
 const ProductsContainer = () => {
   const { products } = useProduct();
+  const [filter, setFilter] = useState('');
+  const [search, setSearch] = useState('');
+
   return (
-    <div className="bg-base-white p-2.5 flex flex-col gap-y-1.5 w-full flex-1 h-full rounded-b-[6px] relative">
+    <div className="bg-base-white p-2.5 flex flex-col gap-y-1.5 w-full flex-1 h-full overflow-hidden rounded-b-[6px] relative">
       <svg
         width="15"
         height="15"
@@ -36,6 +39,7 @@ const ProductsContainer = () => {
         <div className="relative">
           <Input
             placeholder="Search order product..."
+            onChange={(e) => setSearch(e.target.value)}
             className="py-3 pl-9 placeholder:text-sm text-lg placeholder:text-grey-600  pr-24 h-[45px]"
           />
           <Image
@@ -51,12 +55,17 @@ const ProductsContainer = () => {
         </div>
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-x-1">
-            {categories.map(({ key, value }: Category) => (
+            {Object.values(Categories).map((category) => (
               <div
-                className="px-8 py-1.5 rounded-[6px] border border-grey-100 cursor-pointer"
-                key={key}
+                className={twMerge(
+                  'px-8 py-1.5 rounded-[6px] border border-grey-100 cursor-pointer',
+                  (filter === category || (filter === '' && category === 'All')) &&
+                    'border-blue-500 text-blue-500',
+                )}
+                key={category}
+                onClick={() => setFilter(category === 'All' ? '' : category)}
               >
-                {value}
+                {category}
               </div>
             ))}
           </div>
@@ -66,13 +75,30 @@ const ProductsContainer = () => {
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-full flex-1 overflow-y-auto">
-        {products && products.length > 0 ? (
-          products.map((product: Product) => <ProductCard key={product._id} product={product} />)
-        ) : (
-          <span>Products not found!</span>
-        )}
-      </div>
+      <ScrollArea className="w-full h-full overflow-hidden pr-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {products && products.length > 0 ? (
+            products
+              .filter((p) => (filter !== '' ? p.category === filter : true))
+              .filter((p) =>
+                search !== ''
+                  ? p.name
+                      .replace(/[\t ]{2,}/g, ' ')
+                      .toLowerCase()
+                      .includes(
+                        search
+                          .replace(/[\t ]{2,}/g, ' ')
+                          .trim()
+                          .toLowerCase(),
+                      )
+                  : true,
+              )
+              .map((product: Product) => <ProductCard key={product._id} product={product} />)
+          ) : (
+            <span>Products not found!</span>
+          )}
+        </div>
+      </ScrollArea>
     </div>
   );
 };
