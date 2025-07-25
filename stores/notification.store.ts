@@ -15,8 +15,6 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
 
       if (notifications) {
         set({ notifications: notifications });
-        console.log(notifications);
-
         return notifications as Notification[];
       }
     } catch (error) {

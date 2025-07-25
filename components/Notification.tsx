@@ -29,7 +29,7 @@ const Notification = () => {
         sideOffset={8}
         align="end"
         className="w-screen max-w-sm sm:max-w-md md:max-w-lg lg:w-[470px] sm:right-0 left-0 sm:left-auto px-4 mt-2.5"
->
+      >
         <h3 className="text-sm font-medium leading-[18px] tracking-tight text-[#0B0B0B] py-2 px-3  lg:py-3 lg:px-4">
           Notification
         </h3>

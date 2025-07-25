@@ -27,7 +27,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Input } from '../ui/input';
 import { DataTablePagination } from './DataTablePagination';
-import { ScrollArea } from '../ui/scroll-area';
+import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -101,7 +101,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
             View all
           </Link>
         </div>
-        <ScrollArea className="overflow-hidden w-full h-full pr-4">
+        <ScrollArea className="w-full overflow-hidden h-full pr-4">
+          <ScrollBar orientation="horizontal" />
           <div className="py-4">
             <Table className="rounded-2xl px-3">
               <TableHeader className="py-3 h-12">

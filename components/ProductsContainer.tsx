@@ -9,6 +9,21 @@ import ProductCard from './ProductCard';
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import ProductDialogForm from './ProductDialogForm';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 export enum Categories {
   All = 'All',
@@ -24,7 +39,7 @@ const ProductsContainer = () => {
   const [search, setSearch] = useState('');
 
   return (
-    <div className="bg-base-white p-2.5 flex flex-col gap-y-1.5 w-full flex-1 h-full overflow-hidden rounded-b-[6px] relative">
+    <div className="bg-base-white relative p-2.5 flex flex-col gap-y-1.5 w-full flex-1 h-full  rounded-b-[6px]">
       <svg
         width="15"
         height="15"
@@ -54,7 +69,7 @@ const ProductsContainer = () => {
           </Button>
         </div>
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-x-1">
+          <div className="items-center gap-x-1 hidden md:flex">
             {Object.values(Categories).map((category) => (
               <div
                 className={twMerge(
@@ -69,10 +84,35 @@ const ProductsContainer = () => {
               </div>
             ))}
           </div>
-          <button className="flex items-center gap-x-1.5 cursor-pointer">
-            <Image src={icons.plus} alt="plus" width={20} height={20} />
-            <span>Add Product</span>
-          </button>
+          <div className="block md:hidden">
+            <Select
+              onValueChange={(value) => setFilter(value === 'All' ? '' : value)}
+              defaultValue={'All'}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="" />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.values(Categories).map((category) => (
+                  <SelectItem value={category} key={category}>
+                    {category}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <Dialog>
+            <DialogTrigger className="flex items-center gap-x-1.5 cursor-pointer">
+              <Image src={icons.plus} alt="plus" width={20} height={20} />
+              <span>Add Product</span>
+            </DialogTrigger>
+            <DialogContent className="p-2.5">
+              <DialogHeader>
+                <DialogTitle>Add Product</DialogTitle>
+                <ProductDialogForm />
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
       <ScrollArea className="w-full h-full overflow-hidden pr-4">

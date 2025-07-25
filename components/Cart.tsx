@@ -31,7 +31,7 @@ const Cart = () => {
     console.log(values);
   };
   return (
-    <div className="flex flex-col justify-between rounded-[10px] bg-base-white ml-2.5 mt-2.5 p-2.5">
+    <div className="flex max-lg:row-start-1 flex-col justify-between rounded-[10px] bg-base-white ml-2.5 mt-2.5 p-2.5">
       <div className="flex flex-col gap-y-5">
         <div className="flex flex-col gap-y-3">
           <div className="flex justify-between items-center">

@@ -6,7 +6,7 @@ const Products = () => {
   return (
     <section className="grid grid-cols-1 lg:grid-cols-[1fr_300px] max-w-[1536px] mx-auto w-full grid-rows-1 h-full overflow-hidden">
       <ProductsContainer />
-      <Cart />
+      <Cart/>
     </section>
   );
 };

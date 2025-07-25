@@ -39,16 +39,16 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
         if (accessToken && !isAuthenticated) {
           const user = await fetchUser();
           if (user && user._id) {
-            if (notifications?.length! === 0) await fetchNotifications(user._id);
-            if (products?.length! === 0) await fetchProducts();
+            await fetchNotifications(user._id);
+            await fetchProducts();
           }
 
           if (!user) {
             await fetchRefreshToken();
             const retryUser = await fetchUser();
             if (retryUser && retryUser._id) {
-              if (notifications?.length! === 0) await fetchNotifications(retryUser._id);
-              if (products?.length! === 0) await fetchProducts();
+              await fetchNotifications(retryUser._id);
+              await fetchProducts();
             }
             if (!retryUser) {
               router.push('/sign-in');
