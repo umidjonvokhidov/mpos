@@ -48,6 +48,7 @@ const search2 = '/icons/Search 2.svg';
 const show = '/icons/Show.svg';
 const verticalDot = '/icons/Vertical Dot.svg';
 const x = '/icons/X.svg';
+const image = '/icons/image.svg';
 
 const icons = {
   arrowBottom24,
@@ -100,6 +101,7 @@ const icons = {
   verticalDot,
   x,
   notificationDot,
+  image,
 };
 
 export default icons;

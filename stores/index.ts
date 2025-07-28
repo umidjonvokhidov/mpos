@@ -64,9 +64,11 @@ export const useNotification = () => {
 export const useProduct = () => {
   const products = useProductStore((state: ProductStore) => state.products);
   const fetchProducts = useProductStore((state: ProductStore) => state.fetchProducts);
+  const createProduct = useProductStore((state: ProductStore) => state.createProduct);
 
   return {
     products,
     fetchProducts,
+    createProduct
   };
 };

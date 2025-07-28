@@ -12,6 +12,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -34,9 +35,20 @@ export enum Categories {
 }
 
 const ProductsContainer = () => {
-  const { products } = useProduct();
+  const { products, createProduct } = useProduct();
   const [filter, setFilter] = useState('');
   const [search, setSearch] = useState('');
+  const [open, setOpen] = useState(false);
+
+  const handleSubmit = async (values: ProductFormValues) => {
+    try {
+      const { image, stock, category, name, price } = values;
+      const productCreated = await createProduct({ name, price, category, image, stock });
+      if (productCreated) setOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="bg-base-white relative p-2.5 flex flex-col gap-y-1.5 w-full flex-1 h-full  rounded-b-[6px]">
@@ -101,7 +113,7 @@ const ProductsContainer = () => {
               </SelectContent>
             </Select>
           </div>
-          <Dialog>
+          <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger className="flex items-center gap-x-1.5 cursor-pointer">
               <Image src={icons.plus} alt="plus" width={20} height={20} />
               <span>Add Product</span>
@@ -109,7 +121,10 @@ const ProductsContainer = () => {
             <DialogContent className="p-2.5">
               <DialogHeader>
                 <DialogTitle>Add Product</DialogTitle>
-                <ProductDialogForm />
+                <DialogDescription>
+                  Fill in the product details below to add a new product to your inventory.
+                </DialogDescription>
+                <ProductDialogForm handleSubmit={handleSubmit} />
               </DialogHeader>
             </DialogContent>
           </Dialog>

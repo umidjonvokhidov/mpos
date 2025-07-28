@@ -27,6 +27,8 @@ declare interface NotificationStore {
 declare interface ProductStore {
   products: Product[] | null;
   fetchProducts: () => Promise<Product[] | undefined>;
+  createProduct: (data: ProductFormValues) => Promise<boolean>;
+  getProduct: (id: string) => Promise<Product | undefined>;
 }
 declare interface UIStore {
   isLoading: boolean;

@@ -8,7 +8,7 @@ declare interface Product {
   category: ProductCategory;
   image: string;
   ingredients: string[];
-  stock: number;
+  stock: boolean;
   createdBy: string;
   createdAt?: Date;
   updatedAt?: Date;

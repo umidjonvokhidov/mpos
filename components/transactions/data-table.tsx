@@ -9,6 +9,7 @@ import {
   SortingState,
   getSortedRowModel,
   getFilteredRowModel,
+  VisibilityState,
   getPaginationRowModel,
 } from '@tanstack/react-table';
 import { useState } from 'react';
@@ -32,11 +33,19 @@ import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  columnsVisibility?: VisibilityState;
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+  columnsVisibility,
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+    columnsVisibility || {},
+  );
 
   const table = useReactTable({
     data,
@@ -47,52 +56,56 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
     state: {
       sorting,
       columnFilters,
+      columnVisibility,
     },
   });
 
   return (
     <div className="flex flex-col gap-3 border border-grey-100 p-2.5 rounded-[6px] h-full overflow-hidden">
-      <div className="flex items-center gap-3">
-        <Select>
-          <SelectTrigger className="w-full border-neutral-grey-300 rounded-[6px]">
-            <SelectValue placeholder="All Transaction" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="light">Light</SelectItem>
-            <SelectItem value="dark">Dark</SelectItem>
-            <SelectItem value="system">System</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select>
-          <SelectTrigger className="w-full border-neutral-grey-300 rounded-[6px]">
-            <SelectValue placeholder="All Category" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="light">Light</SelectItem>
-            <SelectItem value="dark">Dark</SelectItem>
-            <SelectItem value="system">System</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="w-full relative">
-        <Image
-          src={icons.search1}
-          alt="search"
-          width={20}
-          height={20}
-          className="absolute top-1/2 -translate-y-1/2 left-3"
-        />
-        <Input
-          placeholder="Search Transaction"
-          value={(table.getColumn('customer')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => {
-            table.getColumn('customer')?.setFilterValue(event.target.value);
-          }}
-          className="pl-9"
-        />
+      <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-3">
+        <div className="flex items-center gap-3 w-full lg:max-w-[350px]">
+          <Select>
+            <SelectTrigger className="w-full border-neutral-grey-300 rounded-[6px]">
+              <SelectValue placeholder="All Transaction" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="light">Light</SelectItem>
+              <SelectItem value="dark">Dark</SelectItem>
+              <SelectItem value="system">System</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select>
+            <SelectTrigger className="w-full border-neutral-grey-300 rounded-[6px]">
+              <SelectValue placeholder="All Category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="light">Light</SelectItem>
+              <SelectItem value="dark">Dark</SelectItem>
+              <SelectItem value="system">System</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="w-full relative lg:max-w-[350px]">
+          <Image
+            src={icons.search1}
+            alt="search"
+            width={20}
+            height={20}
+            className="absolute top-1/2 -translate-y-1/2 left-3"
+          />
+          <Input
+            placeholder="Search Transaction"
+            value={(table.getColumn('customer')?.getFilterValue() as string) ?? ''}
+            onChange={(event) => {
+              table.getColumn('customer')?.setFilterValue(event.target.value);
+            }}
+            className="pl-9"
+          />
+        </div>
       </div>
       <div className="flex flex-col gap-y-4 h-full overflow-hidden">
         <div className="flex justify-between items-center">

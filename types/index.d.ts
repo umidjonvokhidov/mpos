@@ -9,6 +9,15 @@ declare type NavItem = {
   path: string;
 };
 
+declare interface ProductFormValues {
+  image?: File;
+  imageUrl?: string;
+  stock: boolean;
+  category: string;
+  name: string;
+  price: number;
+}
+
 declare interface NotificationType {
   id: number;
   title: string;
