@@ -1,8 +1,8 @@
 'use client';
 
-import { useAuth, useNotification, useProduct, useUI } from '@/stores';
+import { useAuth, useCart, useNotification, useProduct, useUI } from '@/stores';
 import Loading from '../loading';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 import React from 'react';
@@ -10,10 +10,12 @@ import Navbar from '@/components/Navbar';
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const router = useRouter();
-  const { fetchUser, isAuthenticated, fetchRefreshToken, user } = useAuth();
-  const { fetchNotifications, notifications } = useNotification();
+  const pathname = usePathname();
+  const { fetchUser, isAuthenticated, user, logout, login, register } = useAuth();
+  const { fetchNotifications } = useNotification();
+  const { fetchCart } = useCart();
+  const { fetchProducts } = useProduct();
   const { setIsLoading, isLoading } = useUI();
-  const { products, fetchProducts } = useProduct();
   const prevAuthRef = React.useRef(isAuthenticated);
 
   useEffect(() => {
@@ -32,30 +34,22 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
         if (token) {
           localStorage.setItem('accessToken', token);
           router.replace('/');
+          return;
         }
 
         const accessToken = localStorage.getItem('accessToken');
 
-        if (accessToken && !isAuthenticated) {
-          const user = await fetchUser();
-          if (user && user._id) {
-            await fetchNotifications(user._id);
-            await fetchProducts();
-          }
-
-          if (!user) {
-            await fetchRefreshToken();
-            const retryUser = await fetchUser();
-            if (retryUser && retryUser._id) {
-              await fetchNotifications(retryUser._id);
-              await fetchProducts();
-            }
-            if (!retryUser) {
-              router.push('/sign-in');
-            }
-          }
-        } else if (!accessToken && !isAuthenticated) {
+        if (!accessToken || accessToken === 'null' || accessToken === 'undefined') {
           router.push('/sign-in');
+          return;
+        }
+        const user = await fetchUser();
+
+        if (user && user._id) {
+          await Promise.all([fetchNotifications(user._id), fetchProducts(), fetchCart()]);
+        } else {
+          router.push('/sign-in');
+          return;
         }
       } catch (error) {
         console.log(error);
@@ -66,12 +60,12 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
     };
 
     checkAuth();
-  }, [fetchUser, fetchRefreshToken, isAuthenticated, user, router, setIsLoading]);
+  }, []);
 
   return isLoading ? (
     <Loading />
   ) : (
-    <main className="p-2.5 bg-[#EDEEEF] flex flex-col flex-1 lg:overflow-hidden">
+    <main className="p-2.5 bg-[#EDEEEF] flex h-full flex-col flex-1 lg:overflow-hidden">
       <Navbar />
       {children}
     </main>

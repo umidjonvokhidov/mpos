@@ -21,11 +21,20 @@ declare interface Transaction {
   fullname: string;
   typeService: TypeService;
   totalPrice: number;
+  tableNumber: number;
   status: TransactionStatus;
   products: TransactionProduct[];
   paymentMethod: PaymentMethod;
   paymentStatus: PaymentStatus;
   paymentDetails?: PaymentDetails;
+  description?: string;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+declare interface CartProperties {
+  fullname: string;
+  typeService: TypeService;
+  tableNumber: number;
+  description?: string;
 }

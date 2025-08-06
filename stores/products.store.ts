@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { create } from 'zustand';
+import axiosInstance from '@/lib/utils';
 
 export const useProductStore = create<ProductStore>((set, get) => ({
   products: [],
@@ -10,6 +11,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       const products = res.data.data;
 
       if (res.data.success) {
+        console.log(products);
         set({ products: products });
         return products;
       }
@@ -19,17 +21,11 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   },
   createProduct: async (data: ProductFormValues) => {
     try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/products/`,
-        { data },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          },
+      const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_API_URL}/products/`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
         },
-      );
-
-      console.log(res);
+      });
 
       if (res.data.success) {
         await get().fetchProducts();
@@ -41,15 +37,42 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   },
   getProduct: async (id) => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      });
+      const res = await axiosInstance.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`);
 
       if (res.data.success) {
-        console.log(res.data.data);
         return res.data.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  updateProduct: async (id, data) => {
+    try {
+      const res = await axiosInstance.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+
+      if (res.data.success) {
+        await get().fetchProducts();
+        return res.data.success;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  deleteProduct: async (id) => {
+    try {
+      const res = await axiosInstance.delete(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`);
+
+      if (res.data.success) {
+        await get().fetchProducts();
+        return res.data.success;
       }
     } catch (error) {
       console.log(error);

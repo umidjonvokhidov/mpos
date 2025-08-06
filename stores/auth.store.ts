@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { toast } from 'sonner';
 import { create } from 'zustand';
+import axiosInstance from '@/lib/utils';
 
 export const useAuthStore = create<AuthStore>((set) => ({
   isAuthenticated: false,
@@ -10,11 +11,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
   fetchUser: async () => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      });
+      const res = await axiosInstance.get(`${process.env.NEXT_PUBLIC_API_URL}/users/me`);
 
       const user = res.data.user as User;
       set({ user, isAuthenticated: true });
@@ -24,25 +21,25 @@ export const useAuthStore = create<AuthStore>((set) => ({
       return undefined;
     }
   },
-  fetchRefreshToken: async () => {
-    try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
-        {},
-        { withCredentials: true },
-      );
+  // fetchRefreshToken: async () => {
+  //   try {
+  //     const res = await axios.post(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
+  //       {},
+  //       { withCredentials: true },
+  //     );
 
-      if (res.data.accessToken) {
-        localStorage.setItem('accessToken', res.data.accessToken);
-        return true;
-      } else {
-        return false;
-      }
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  },
+  //     if (res.data.accessToken) {
+  //       localStorage.setItem('accessToken', res.data.accessToken);
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     return false;
+  //   }
+  // },
   logout: async () => {
     try {
       const res = await axios.post(
@@ -74,9 +71,9 @@ export const useAuthStore = create<AuthStore>((set) => ({
       );
 
       if (res.data.success) {
-        set({ user: res.data.data.user, isAuthenticated: true });
         toast.success('You have been logged in successfully!');
         localStorage.setItem('accessToken', res.data.data.token);
+        set({ user: res.data.data.user, isAuthenticated: true });
       }
 
       return res.data.success;

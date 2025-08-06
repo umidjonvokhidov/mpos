@@ -17,9 +17,16 @@ const Profile = () => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <div className="flex items-center gap-x-1 cursor-pointer hover:bg-grey-50/80 transition-all duration-300 ease-in-out p-2.5 rounded-[6px]">
-          <Image src="/images/avatar.png" width={32} height={32} alt="avatar" />
+          <Image
+            src={user?.profilePicture ? user.profilePicture : '/images/avatar.png'}
+            width={32}
+            height={32}
+            alt="avatar"
+          />
           <div className="flex-col items-start hidden xl:flex">
-            <h4 className="text-xs font-medium leading-4 tracking-tight text-base-black">{user?.firstname}</h4>
+            <h4 className="text-xs font-medium leading-4 tracking-tight text-base-black">
+              {user?.firstname}
+            </h4>
             <p className="text-[10px] leading-normal text-grey-600">{user?.email}</p>
           </div>
           <Image
@@ -40,9 +47,7 @@ const Profile = () => {
         <DropdownMenuItem>Team</DropdownMenuItem>
         <DropdownMenuItem>Subscription</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={logout}>
-          Logout
-        </DropdownMenuItem>
+        <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

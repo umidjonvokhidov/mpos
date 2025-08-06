@@ -1,6 +1,6 @@
 'use client';
 
-import { useProduct } from '@/stores';
+import { useAuth, useProduct } from '@/stores';
 import { Input } from './ui/input';
 import Image from 'next/image';
 import icons from '@/public/icons';
@@ -39,6 +39,7 @@ const ProductsContainer = () => {
   const [filter, setFilter] = useState('');
   const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
+  const { user } = useAuth();
 
   const handleSubmit = async (values: ProductFormValues) => {
     try {
@@ -51,7 +52,7 @@ const ProductsContainer = () => {
   };
 
   return (
-    <div className="bg-base-white relative p-2.5 flex flex-col gap-y-1.5 w-full flex-1 h-full  rounded-b-[6px]">
+    <div className="bg-base-white relative p-2.5 flex flex-col gap-y-1.5 w-full flex-1 h-full rounded-b-[6px]">
       <svg
         width="15"
         height="15"
@@ -113,21 +114,23 @@ const ProductsContainer = () => {
               </SelectContent>
             </Select>
           </div>
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger className="flex items-center gap-x-1.5 cursor-pointer">
-              <Image src={icons.plus} alt="plus" width={20} height={20} />
-              <span>Add Product</span>
-            </DialogTrigger>
-            <DialogContent className="p-2.5">
-              <DialogHeader>
-                <DialogTitle>Add Product</DialogTitle>
-                <DialogDescription>
-                  Fill in the product details below to add a new product to your inventory.
-                </DialogDescription>
-                <ProductDialogForm handleSubmit={handleSubmit} />
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
+          {user && user.role !== 'waiter' && (
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogTrigger className="flex items-center gap-x-1.5 cursor-pointer">
+                <Image src={icons.plus} alt="plus" width={20} height={20} />
+                <span>Add Product</span>
+              </DialogTrigger>
+              <DialogContent className="p-2.5">
+                <DialogHeader>
+                  <DialogTitle>Add Product</DialogTitle>
+                  <DialogDescription>
+                    Fill in the product details below to add a new product to your inventory.
+                  </DialogDescription>
+                  <ProductDialogForm handleSubmit={handleSubmit} />
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+          )}
         </div>
       </div>
       <ScrollArea className="w-full h-full overflow-hidden pr-4">

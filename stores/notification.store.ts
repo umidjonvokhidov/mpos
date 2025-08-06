@@ -1,15 +1,13 @@
-import axios from 'axios';
+import axiosInstance from '@/lib/utils';
 import { create } from 'zustand';
 
 export const useNotificationStore = create<NotificationStore>((set, get) => ({
   notifications: null,
   fetchNotifications: async (id) => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/notifications?id=${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      });
+      const res = await axiosInstance.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/notifications?id=${id}`,
+      );
 
       const notifications = res.data.data;
 
@@ -23,14 +21,9 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
   },
   markNotificationRead: async (id, userID) => {
     try {
-      const res = await axios.put(
+      const res = await axiosInstance.put(
         `${process.env.NEXT_PUBLIC_API_URL}/notifications/${id}`,
         {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          },
-        },
       );
 
       if (res.data.success) {
@@ -44,14 +37,9 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
   },
   markAllNotificationsRead: async (id) => {
     try {
-      const res = await axios.put(
+      const res = await axiosInstance.put(
         `${process.env.NEXT_PUBLIC_API_URL}/notifications/mark-all-as-read/${id}`,
         {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          },
-        },
       );
 
       if (res.data.success) {

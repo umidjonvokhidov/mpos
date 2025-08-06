@@ -1,10 +1,10 @@
 'use client';
 
 import { features } from '@/constants';
-import { useAuth, useUI } from '@/stores';
+import { useAuth, useCart, useNotification, useProduct, useUI } from '@/stores';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -13,9 +13,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Loading from '../loading';
 
 const AuthLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
-  const { user, isAuthenticated, fetchUser, fetchRefreshToken } = useAuth();
+  const { user, isAuthenticated, fetchUser, login, logout, register } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
   const { setIsLoading, isLoading } = useUI();
+  const { fetchNotifications } = useNotification();
+  const { fetchCart } = useCart();
+  const { fetchProducts } = useProduct();
 
   useEffect(() => {
     setIsLoading(true);
@@ -23,37 +27,34 @@ const AuthLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
       try {
         const accessToken = localStorage.getItem('accessToken');
 
-        if (accessToken && !isAuthenticated) {
-          const user = await fetchUser();
+        if (!accessToken || accessToken === 'null' || accessToken === 'undefined') {
+          router.push('/sign-in');
+          return;
+        }
+        const user = await fetchUser();
 
-          if (!user) {
-            await fetchRefreshToken();
-            const retryUser = await fetchUser();
+        if (user && user._id) {
+          await Promise.all([fetchNotifications(user._id), fetchProducts(), fetchCart()]);
+        } else {
+          router.push('/sign-in');
+          return;
+        }
 
-            if (retryUser) {
-              router.push('/');
-              return;
-            }
-          } else {
-            router.push('/');
-            return;
-          }
+        if (user && isAuthenticated) {
+          router.push('/');
+          return;
         }
       } catch (error) {
-        console.log(error);
+        console.error('Auth check failed:', error);
+        router.push('/sign-in');
+        return;
       } finally {
         setIsLoading(false);
       }
     };
 
     checkAuth();
-  }, [fetchUser, fetchRefreshToken, isAuthenticated, router, setIsLoading]);
-
-  useEffect(() => {
-    if (user && isAuthenticated) {
-      router.push('/');
-    }
-  }, [user, isAuthenticated, router]);
+  }, []);
 
   return isLoading ? (
     <Loading />
@@ -94,7 +95,9 @@ const AuthLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
                   sizes="100vw"
                 />
                 <div className="flex flex-col items-center w-full max-w-[488px]">
-                  <h4 className="text-base-white text-2xl font-medium leading-10 tracking-tight text-center">{title}</h4>
+                  <h4 className="text-base-white text-2xl font-medium leading-10 tracking-tight text-center">
+                    {title}
+                  </h4>
                   <p className="font-inter text-grey-700 text-center">{description}</p>
                 </div>
               </div>

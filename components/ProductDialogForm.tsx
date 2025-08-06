@@ -28,7 +28,7 @@ import { Switch } from '@/components/ui/switch';
 import { useState } from 'react';
 
 const formSchema = z.object({
-  file: z.instanceof(File, { message: 'Image is required' }).optional().or(z.literal(undefined)),
+  image: z.instanceof(File, { message: 'Image is required' }).optional().or(z.literal(undefined)),
   stock: z.boolean(),
   category: z.string().min(1, 'Category is required'),
   name: z.string().min(1, 'Name is required'),
@@ -46,7 +46,7 @@ const ProductDialogForm = ({ handleSubmit, defaultValues }: ProductDialogFormPro
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      file: undefined,
+      image: undefined,
       stock: defaultValues?.stock ?? true,
       category: defaultValues?.category ?? '',
       name: defaultValues?.name ?? '',
@@ -67,14 +67,14 @@ const ProductDialogForm = ({ handleSubmit, defaultValues }: ProductDialogFormPro
       >
         <FormField
           control={form.control}
-          name="file"
+          name="image"
           render={({ field: { value, onChange, ...field } }) => (
             <FormItem>
               <FormLabel className="w-full h-[230px] rounded-[6px] bg-grey-100 mb-1 p-2.5 flex items-center justify-center cursor-pointer overflow-hidden">
                 {preview ? (
                   <Image
                     src={preview}
-                    sizes='100vw'
+                    sizes="100vw"
                     width={0}
                     height={0}
                     className="object-cover w-full h-full rounded-[6px]"
@@ -171,6 +171,7 @@ const ProductDialogForm = ({ handleSubmit, defaultValues }: ProductDialogFormPro
                 <Input
                   type="number"
                   min={0}
+                  step="0.01"
                   placeholder="Product Price"
                   {...field}
                   onChange={(e) => field.onChange(Number(e.target.value))}

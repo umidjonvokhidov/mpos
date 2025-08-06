@@ -1,5 +1,5 @@
 declare interface CartProduct {
-  productId: string | Product;
+  productId: Product;
   count: number;
 }
 

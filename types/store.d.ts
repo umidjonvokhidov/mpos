@@ -3,7 +3,7 @@ declare interface AuthStore {
   user: User | null;
   setUser: (isAuthenticated: boolean, user: User) => void;
   fetchUser: () => Promise<User | undefined>;
-  fetchRefreshToken: () => Promise<boolean>;
+  // fetchRefreshToken: () => Promise<boolean>;
   logout: () => Promise<boolean>;
   login: (email: string, password: string, remember?: boolean) => Promise<boolean>;
   register: (
@@ -29,6 +29,22 @@ declare interface ProductStore {
   fetchProducts: () => Promise<Product[] | undefined>;
   createProduct: (data: ProductFormValues) => Promise<boolean>;
   getProduct: (id: string) => Promise<Product | undefined>;
+  updateProduct: (id: string, data: ProductFormValues) => Promise<boolean>;
+  deleteProduct: (id: string) => Promise<boolean>;
+}
+
+declare interface CartStore {
+  cart: Cart | null;
+  cartProperties: CartProperties | null;
+  fetchCart: () => Promise<Cart>;
+  addToCart: (id: string) => Promise<boolean>;
+  removeFromCart: (id: string) => Promise<boolean>;
+  clearCart: () => Promise<boolean>;
+  deleteFromCart: (id: string) => Promise<boolean>;
+  setCartProperties: () => void;
+  confirmCartProperties: (cartProperties: CartProperties) => void;
+  clearCartProperties: () => void;
+  checkoutCart: () => Promise<string>;
 }
 declare interface UIStore {
   isLoading: boolean;

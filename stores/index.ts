@@ -2,13 +2,14 @@ import { useAuthStore } from './auth.store';
 import { useUIStore } from './ui.store';
 import { useNotificationStore } from './notification.store';
 import { useProductStore } from './products.store';
+import useCartStore from './cart.store';
 
 export const useAuth = () => {
   const user = useAuthStore((state: AuthStore) => state.user);
   const isAuthenticated = useAuthStore((state: AuthStore) => state.isAuthenticated);
   const setUser = useAuthStore((state: AuthStore) => state.setUser);
   const fetchUser = useAuthStore((state: AuthStore) => state.fetchUser);
-  const fetchRefreshToken = useAuthStore((state: AuthStore) => state.fetchRefreshToken);
+  // const fetchRefreshToken = useAuthStore((state: AuthStore) => state.fetchRefreshToken);
   const logout = useAuthStore((state: AuthStore) => state.logout);
   const login = useAuthStore((state: AuthStore) => state.login);
   const register = useAuthStore((state: AuthStore) => state.register);
@@ -21,7 +22,7 @@ export const useAuth = () => {
     isAuthenticated,
     setUser,
     fetchUser,
-    fetchRefreshToken,
+    // fetchRefreshToken,
     logout,
     login,
     register,
@@ -65,10 +66,42 @@ export const useProduct = () => {
   const products = useProductStore((state: ProductStore) => state.products);
   const fetchProducts = useProductStore((state: ProductStore) => state.fetchProducts);
   const createProduct = useProductStore((state: ProductStore) => state.createProduct);
+  const updateProduct = useProductStore((state: ProductStore) => state.updateProduct);
+  const deleteProduct = useProductStore((state: ProductStore) => state.deleteProduct);
 
   return {
     products,
     fetchProducts,
-    createProduct
+    createProduct,
+    updateProduct,
+    deleteProduct,
+  };
+};
+
+export const useCart = () => {
+  const cart = useCartStore((state: CartStore) => state.cart);
+  const cartProperties = useCartStore((state: CartStore) => state.cartProperties);
+  const fetchCart = useCartStore((state: CartStore) => state.fetchCart);
+  const addToCart = useCartStore((state: CartStore) => state.addToCart);
+  const removeFromCart = useCartStore((state: CartStore) => state.removeFromCart);
+  const clearCart = useCartStore((state: CartStore) => state.clearCart);
+  const deleteFromCart = useCartStore((state: CartStore) => state.deleteFromCart);
+  const confirmCartProperties = useCartStore((state: CartStore) => state.confirmCartProperties);
+  const setCartProperties = useCartStore((state: CartStore) => state.setCartProperties);
+  const clearCartProperties = useCartStore((state: CartStore) => state.clearCartProperties);
+  const checkoutCart = useCartStore((state: CartStore) => state.checkoutCart);
+
+  return {
+    cart,
+    cartProperties,
+    setCartProperties,
+    clearCartProperties,
+    fetchCart,
+    checkoutCart,
+    addToCart,
+    removeFromCart,
+    clearCart,
+    deleteFromCart,
+    confirmCartProperties,
   };
 };
