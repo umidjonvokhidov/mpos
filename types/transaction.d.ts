@@ -11,7 +11,7 @@ declare type PaymentDetails = {
 };
 
 declare type TransactionStatus = 'pending' | 'completed' | 'declined';
-declare type PaymentStatus = 'pending' | 'completed' | 'failed';
+declare type PaymentStatus = 'pending' | 'completed' | 'canceled' | 'failed';
 declare type TypeService = 'Delivery' | 'Take Away' | 'Dine In';
 declare type PaymentMethod = 'Credit Card' | 'PayPal' | 'Cash' | 'Apple Pay' | 'Google Pay';
 

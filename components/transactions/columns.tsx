@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 import { Checkbox } from '../ui/checkbox';
 
-export const columns: ColumnDef<TransactionsTable>[] = [
+export const columns: ColumnDef<Transaction>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -32,11 +32,12 @@ export const columns: ColumnDef<TransactionsTable>[] = [
     enableResizing: true,
   },
   {
-    accessorKey: 'id',
+    accessorKey: '_id',
     header: () => <div className="text-base-black text-base font-medium">Transaction ID</div>,
+    cell: (info) => `${String(info.getValue()).toUpperCase()}`,
   },
   {
-    accessorKey: 'customer',
+    accessorKey: 'fullname',
     header: ({ column }) => (
       <div
         className="text-base-black text-base font-medium cursor-pointer flex items-center gap-x-2 group"
@@ -54,7 +55,7 @@ export const columns: ColumnDef<TransactionsTable>[] = [
     ),
   },
   {
-    accessorKey: 'type',
+    accessorKey: 'typeService',
     header: ({ column }) => (
       <div
         className="text-base-black text-base font-medium cursor-pointer flex items-center gap-x-2 group"
@@ -72,7 +73,7 @@ export const columns: ColumnDef<TransactionsTable>[] = [
     ),
   },
   {
-    accessorKey: 'total',
+    accessorKey: 'totalPrice',
     header: ({ column }) => (
       <div
         className="text-base-black text-base font-medium cursor-pointer flex items-center gap-x-2 group"
@@ -88,10 +89,10 @@ export const columns: ColumnDef<TransactionsTable>[] = [
         />
       </div>
     ),
-    cell: (info) => `$${info.getValue()}`,
+    cell: (info) => `$${Number(info.getValue()).toFixed(2)}`,
   },
   {
-    accessorKey: 'status',
+    accessorKey: 'paymentStatus',
     header: ({ column }) => (
       <div
         className="text-base-black text-base font-medium cursor-pointer flex items-center gap-x-2 group"

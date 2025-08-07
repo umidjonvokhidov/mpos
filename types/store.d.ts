@@ -46,6 +46,14 @@ declare interface CartStore {
   clearCartProperties: () => void;
   checkoutCart: () => Promise<string>;
 }
+
+declare interface TransactionStore {
+  transactions: Transaction[] | [];
+  fetchAllTransactions: () => Promise<boolean>;
+  fetchUserTransactions: (id: string) => Promise<boolean>;
+  fetchAllTransactionReports: () => Promise<boolean>;
+  fetchUserTransactionReports: (id: string) => Promise<boolean>;
+}
 declare interface UIStore {
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;

@@ -3,6 +3,7 @@ import { useUIStore } from './ui.store';
 import { useNotificationStore } from './notification.store';
 import { useProductStore } from './products.store';
 import useCartStore from './cart.store';
+import { useTransactionStore } from './transaction.store';
 
 export const useAuth = () => {
   const user = useAuthStore((state: AuthStore) => state.user);
@@ -103,5 +104,29 @@ export const useCart = () => {
     clearCart,
     deleteFromCart,
     confirmCartProperties,
+  };
+};
+
+export const useTransaction = () => {
+  const transactions = useTransactionStore((state: TransactionStore) => state.transactions);
+  const fetchAllTransactions = useTransactionStore(
+    (state: TransactionStore) => state.fetchAllTransactions,
+  );
+  const fetchUserTransactions = useTransactionStore(
+    (state: TransactionStore) => state.fetchUserTransactions,
+  );
+  const fetchAllTransactionReports = useTransactionStore(
+    (state: TransactionStore) => state.fetchAllTransactionReports,
+  );
+  const fetchUserTransactionReports = useTransactionStore(
+    (state: TransactionStore) => state.fetchUserTransactionReports,
+  );
+
+  return {
+    transactions,
+    fetchAllTransactions,
+    fetchUserTransactions,
+    fetchAllTransactionReports,
+    fetchUserTransactionReports,
   };
 };

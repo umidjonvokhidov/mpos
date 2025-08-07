@@ -19,9 +19,14 @@ import { useAuth } from '@/stores';
 
 const Navbar = () => {
   const pathname = usePathname();
-  const {user} = useAuth();
+  const { user } = useAuth();
   return (
-    <nav className={twMerge("bg-base-white w-full rounded-t-[10px] min-h-14 p-2.5 max-w-[1536px] flex gap-3 justify-between items-center lg:flex-row flex-col mx-auto", pathname === "/products" && user && user.role === "waiter" && "rounded-br-[10px]")}>
+    <nav
+      className={twMerge(
+        'bg-base-white w-full lg:rounded-t-[10px] min-h-14 p-2.5 max-w-[1536px] flex gap-3 justify-between items-center lg:flex-row flex-col mx-auto',
+        pathname === '/products' && user && user.role === 'waiter' && 'lg:rounded-br-[10px]',
+      )}
+    >
       <div className="lg:flex hidden items-center gap-6 w-full justify-between lg:w-auto">
         <Image
           src="/images/logo-light.svg"

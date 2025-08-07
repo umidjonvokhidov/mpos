@@ -99,9 +99,9 @@ export function DataTable<TData, TValue>({
           />
           <Input
             placeholder="Search Transaction"
-            value={(table.getColumn('customer')?.getFilterValue() as string) ?? ''}
+            value={(table.getColumn('fullname')?.getFilterValue() as string) ?? ''}
             onChange={(event) => {
-              table.getColumn('customer')?.setFilterValue(event.target.value);
+              table.getColumn('fullname')?.setFilterValue(event.target.value);
             }}
             className="pl-9"
           />

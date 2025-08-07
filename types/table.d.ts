@@ -1,7 +1,17 @@
 declare interface TransactionsTable {
   id: string;
-  customer: string;
-  type: string;
-  total: number;
-  status: 'Completed' | 'Pending' | 'Declined';
+  _id?: string;
+  userID: string;
+  fullname: string;
+  typeService: TypeService;
+  totalPrice: number;
+  tableNumber: number;
+  status: TransactionStatus;
+  products: TransactionProduct[];
+  paymentMethod: PaymentMethod;
+  paymentStatus: PaymentStatus;
+  paymentDetails?: PaymentDetails;
+  description?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

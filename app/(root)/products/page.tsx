@@ -15,7 +15,7 @@ const Products = () => {
   return (
     <section
       className={twMerge(
-        'grid grid-cols-1 max-w-[1536px] mx-auto w-full grid-rows-1 h-full overflow-hidden',
+        'grid grid-cols-1 max-w-[1536px] mx-auto w-full grid-rows-1 p-2.5 lg:p-0 h-full overflow-hidden',
         user && user.role === 'waiter' ? 'lg:grid-cols-[1fr_300px]' : 'lg:grid-cols-1',
       )}
     >

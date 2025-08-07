@@ -92,7 +92,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="flex max-lg:row-start-1 flex-col overflow-y-hidden justify-between h-full rounded-[10px] bg-base-white ml-2.5 mt-2.5 p-2.5">
+    <div className="flex max-lg:row-start-1 flex-col overflow-y-hidden justify-between h-full rounded-t-[10px]  lg:rounded-[10px] bg-base-white lg:ml-2.5 lg:mt-2.5 p-2.5">
       <div className="flex flex-col gap-y-5 h-full overflow-y-hidden">
         <div className="flex flex-col gap-y-3">
           <div className="flex justify-between items-center">
@@ -278,7 +278,7 @@ const Cart = () => {
         >
           {!isLoading ? `Pay ${(cart?.totalPrice! * 1.1).toFixed(2)}` : 'Loading...'}
         </Button>
-      </div>  
+      </div>
     </div>
   );
 };
