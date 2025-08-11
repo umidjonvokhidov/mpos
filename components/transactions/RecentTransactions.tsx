@@ -18,7 +18,19 @@ const RecentTransactions = () => {
 
     fetchData();
   }, []);
-  return transactions && <DataTable columns={columns} columnsVisibility={{}} data={transactions} />;
+  return (
+    transactions && (
+      <DataTable
+        columns={columns}
+        columnsVisibility={{
+          paymentMethod: false,
+          createdAt: false,
+          updatedAt: false,
+        }}
+        data={transactions}
+      />
+    )
+  );
 };
 
 export default RecentTransactions;

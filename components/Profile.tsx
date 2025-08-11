@@ -9,9 +9,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/stores';
+import { useRouter } from 'next/navigation';
 
 const Profile = () => {
   const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const signOutUser = async () => {
+    await logout();
+    router.push('/sign-in');
+  };
 
   return (
     <DropdownMenu>
@@ -47,7 +54,7 @@ const Profile = () => {
         <DropdownMenuItem>Team</DropdownMenuItem>
         <DropdownMenuItem>Subscription</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => signOutUser()}>Logout</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
