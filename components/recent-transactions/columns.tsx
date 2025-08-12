@@ -55,46 +55,6 @@ export const columns: ColumnDef<Transaction>[] = [
     ),
   },
   {
-    accessorKey: 'createdAt',
-    header: ({ column }) => (
-      <div
-        className="text-base-black text-base font-medium mr-6 cursor-pointer flex items-center gap-x-2 group"
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
-        <span>Date</span>
-        <Image
-          src={icons.arrowUpDown1}
-          alt="arrow-up-down"
-          width={20}
-          height={20}
-          className="group-hover:visible invisible"
-        />
-      </div>
-    ),
-    cell: ({ getValue }) => {
-      const value = getValue() as Date | string | undefined;
-      if (!value) return '-';
-      const date = new Date(value as any);
-      if (isNaN(date.getTime())) return '-';
-      return date.toLocaleString(undefined, {
-        year: 'numeric',
-        month: 'short',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-    },
-    filterFn: (row, columnId, filterValue) => {
-      if (!filterValue) return true;
-      const [from, to] = filterValue;
-      const rowDate = new Date(row.getValue(columnId)).getTime();
-
-      return (
-        (!from || rowDate >= new Date(from).getTime()) && (!to || rowDate <= new Date(to).getTime())
-      );
-    },
-  },
-  {
     accessorKey: 'typeService',
     header: ({ column }) => (
       <div
@@ -103,7 +63,7 @@ export const columns: ColumnDef<Transaction>[] = [
       >
         <span>Service Type</span>
         <Image
-          src={icons.arrowUpDown1}  
+          src={icons.arrowUpDown1}
           alt="arrow-up-down"
           width={20}
           height={20}

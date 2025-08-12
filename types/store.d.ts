@@ -50,7 +50,7 @@ declare interface CartStore {
 declare interface TransactionStore {
   transactions: Transaction[] | [];
   fetchAllTransactions: () => Promise<boolean>;
-  fetchUserTransactions: (id: string) => Promise<boolean>;
+  fetchUserTransactions: (user: User) => Promise<boolean>;
   fetchAllTransactionReports: () => Promise<boolean>;
   fetchUserTransactionReports: (id: string) => Promise<boolean>;
 }

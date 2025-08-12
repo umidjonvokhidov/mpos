@@ -33,7 +33,7 @@ declare interface StatisticType {
   value: number | string;
   change?: string;
   changePositive?: boolean;
-  subValue: string;
+  subValue: number;
   currency: boolean;
   viewAllPath: string;
 }

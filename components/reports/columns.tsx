@@ -103,7 +103,7 @@ export const columns: ColumnDef<Transaction>[] = [
       >
         <span>Service Type</span>
         <Image
-          src={icons.arrowUpDown1}  
+          src={icons.arrowUpDown1}
           alt="arrow-up-down"
           width={20}
           height={20}
@@ -130,36 +130,5 @@ export const columns: ColumnDef<Transaction>[] = [
       </div>
     ),
     cell: (info) => `$${Number(info.getValue()).toFixed(2)}`,
-  },
-  {
-    accessorKey: 'status',
-    header: ({ column }) => (
-      <div
-        className="text-base-black text-base font-medium mr-6 cursor-pointer flex items-center gap-x-2 group"
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
-        <span>Status</span>
-        <Image
-          src={icons.arrowUpDown1}
-          alt="arrow-up-down"
-          width={20}
-          height={20}
-          className="group-hover:visible invisible"
-        />
-      </div>
-    ),
-    cell: (info) => {
-      const value = String(info.getValue() ?? '').toLowerCase();
-      return (
-        <span
-          className={twMerge(
-            'py-1 px-2.5 rounded-full capitalize',
-            value === 'completed' && 'bg-success-50 text-success-600',
-            value === 'pending' && 'bg-warning-50 text-warning-600',
-            value === 'declined' && 'bg-error-50 text-error-600',
-          )}
-        >{`${value || '-'}`}</span>
-      );
-    },
   },
 ];

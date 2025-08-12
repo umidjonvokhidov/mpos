@@ -29,7 +29,10 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ statistic }) => {
       </div>
       <div className="flex flex-col gap-y-2 lg:gap-y-3">
         <div className="flex justify-between items-center">
-          <h5 className="text-base text-base-white font-medium lg:text-2xl">{value}</h5>
+          <h5 className="text-base text-base-white font-medium lg:text-2xl">
+            {statistic.key === 'totalIncome' && '$'}
+            {value}
+          </h5>
           {change && (
             <span className="py-1 px-1.5 text-[12px] rounded-full bg-[#F7FCF7]/10 text-success-300">
               {change}
@@ -39,8 +42,15 @@ const StatisticCard: React.FC<StatisticCardProps> = ({ statistic }) => {
         <hr className="border border-grey-900" />
         <div className="flex flex-col items-start gap-y-1.5 lg:gap-y-2">
           <div className="flex items-center justify-between w-full">
-            <h6 className='text-sm text-grey-700 hidden lg:block'>Saturday, 06 Sep 2024</h6>
-            <h5 className="text-sm text-base-white">{subValue}</h5>
+            <h6 className="text-sm text-grey-700 hidden lg:block">
+              {new Date().toLocaleDateString('en-US', {
+                weekday: 'long',
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+              })}
+            </h6>
+            <h5 className="text-sm text-base-white">${subValue}</h5>
           </div>
           <span className="flex items-center gap-x-1">
             <Link href={viewAllPath} className="text-sm text-base-white">

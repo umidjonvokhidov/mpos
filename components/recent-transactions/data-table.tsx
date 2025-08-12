@@ -23,22 +23,11 @@ import {
 } from '@/components/ui/table';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select';
 import icons from '@/public/icons';
+import Link from 'next/link';
 import Image from 'next/image';
 import { Input } from '../ui/input';
 import { DataTablePagination } from './DataTablePagination';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { ChevronDown } from 'lucide-react';
-import DateTime from '../DateTime';
-import { DateRangePicker } from '../ui/date-range-picker';
-import { exportToCSV, exportToExcel, exportToPDF } from '@/lib/exportUtils';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -67,87 +56,64 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   return (
     <div className="flex flex-col gap-3 border border-grey-100 p-2.5 rounded-[6px] h-full overflow-hidden">
       <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-3">
-        <div className="flex flex-col items-start gap-y-1.5">
-          <h3 className="text-4xl text-base-black">Recent Transaction</h3>
-          <p className="text-base text-grey-600">
-            Be a good and honest employee for everyone's happiness
-          </p>
+        <div className="flex items-center gap-3 w-full lg:max-w-[350px]">
+          <Select
+            onValueChange={(value) => {
+              table.getColumn('status')?.setFilterValue(value === 'allTransaction' ? '' : value);
+            }}
+            value={table.getColumn('status')?.getFilterValue() as string}
+          >
+            <SelectTrigger className="w-full border-neutral-grey-300 rounded-[6px]">
+              <SelectValue placeholder="All Transaction" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="allTransaction">All Transaction</SelectItem>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="completed">Completed</SelectItem>
+              <SelectItem value="declined">Declined</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select
+            onValueChange={(value) => {
+              table.getColumn('typeService')?.setFilterValue(value === 'allCategory' ? '' : value);
+            }}
+            value={table.getColumn('typeService')?.getFilterValue() as string}
+          >
+            <SelectTrigger className="w-full border-neutral-grey-300 rounded-[6px]">
+              <SelectValue placeholder="All Category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="allCategory">All Category</SelectItem>
+              <SelectItem value="Delivery">Delivery</SelectItem>
+              <SelectItem value="Take Away">Take Away</SelectItem>
+              <SelectItem value="Dine In">Dine In</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-        <div className="flex items-center gap-x-3">
-          <DateRangePicker
-            onUpdate={(values) =>
-              table
-                .getColumn('createdAt')
-                ?.setFilterValue(
-                  values.range.from && values.range.to
-                    ? [values.range.from.toISOString(), values.range.to.toISOString()]
-                    : undefined,
-                )
-            }
-            initialDateFrom={
-              new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-            }
-            initialDateTo={new Date().toISOString().split('T')[0]}
-            align="start"
-            locale="en-GB"
-            showCompare={false}
+        <div className="w-full relative lg:max-w-[350px]">
+          <Image
+            src={icons.search1}
+            alt="search"
+            width={20}
+            height={20}
+            className="absolute top-1/2 -translate-y-1/2 left-3"
           />
-          <div className="w-full relative lg:max-w-[350px]">
-            <Image
-              src={icons.search1}
-              alt="search"
-              width={20}
-              height={20}
-              className="absolute top-1/2 -translate-y-1/2 left-3"
-            />
-            <Input
-              placeholder="Search Transaction"
-              value={(table.getColumn('fullname')?.getFilterValue() as string) ?? ''}
-              onChange={(event) => {
-                table.getColumn('fullname')?.setFilterValue(event.target.value);
-              }}
-              className="pl-9 border-grey-200 w-full lg:w-[300px]"
-            />
-          </div>
-          <div className="self-stretch w-px my-2.5 bg-grey-200 hidden lg:flex" />
-          <DropdownMenu>
-            <DropdownMenuTrigger className="px-2.5 h-[42px] rounded-[6px] border border-grey-200 flex items-center gap-x-3 cursor-pointer">
-              <span>Export</span>
-              <ChevronDown width={20} />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="" align="end">
-              <DropdownMenuItem
-                onClick={() =>
-                  exportToPDF(
-                    data,
-                    ['_id', 'fullname', 'createdAt', 'typeService', 'totalPrice', 'status'],
-                    `transactions-${new Date().toISOString().split('T')[0]}`,
-                  )
-                }
-              >
-                PDF
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() =>
-                  exportToExcel(data, `transactions-${new Date().toISOString().split('T')[0]}`)
-                }
-              >
-                EXCEL
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() =>
-                  exportToCSV(data, `transactions-${new Date().toISOString().split('T')[0]}`)
-                }
-              >
-                CSV
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Input
+            placeholder="Search Transaction"
+            value={(table.getColumn('fullname')?.getFilterValue() as string) ?? ''}
+            onChange={(event) => {
+              table.getColumn('fullname')?.setFilterValue(event.target.value);
+            }}
+            className="pl-9"
+          />
         </div>
       </div>
-      <div className="flex flex-col gap-y-4 border border-[#DCDCDC] rounded-[6px] p-2.5 h-full overflow-hidden">
+      <div className="flex flex-col gap-y-4 h-full overflow-hidden">
         <div className="flex justify-between items-center">
-          <h3 className="font-medium text-lg">Transactions</h3>
+          <h3 className="font-medium text-lg">Recent Transaction</h3>
+          <Link href="/transactions" className="text-sm font-normal text-blue-400">
+            View all
+          </Link>
         </div>
         <ScrollArea className="w-full overflow-hidden h-full pr-4">
           <ScrollBar orientation="horizontal" />

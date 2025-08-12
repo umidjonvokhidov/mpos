@@ -1,7 +1,16 @@
-const Reports = () => {
-  return (
-    <div className="text-purple-500 font-bold text-5xl">Reports</div>
-  )
-}
+import Reports from '@/components/reports/Reports';
+import { twMerge } from 'tailwind-merge';
 
-export default Reports;
+const ReportsPage = () => {
+  return (
+    <section
+      className={twMerge(
+        ' max-w-[1536px] mx-auto w-full p-2.5 h-full overflow-hidden bg-base-white',
+      )}
+    >
+      <Reports />
+    </section>
+  );
+};
+
+export default ReportsPage;

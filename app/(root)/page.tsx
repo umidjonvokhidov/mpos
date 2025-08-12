@@ -1,4 +1,4 @@
-import RecentTransactions from '@/components/transactions/RecentTransactions';
+import RecentTransactions from '@/components/recent-transactions/RecentTransactions';
 import TotalIncome from '@/components/TotalIncome';
 import Statistics from '@/sections/Statistics';
 

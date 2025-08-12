@@ -1,8 +1,9 @@
 'use client';
 
+import Transactions from '@/components/transactions/Transactions';
 import { twMerge } from 'tailwind-merge';
 
-const Transactions = () => {
+const TransactionsPage = () => {
   const orderCancel = new URLSearchParams(window.location.search).get('canceled');
 
   if (orderCancel) {
@@ -10,10 +11,10 @@ const Transactions = () => {
   }
 
   return (
-    <section className={twMerge(' max-w-[1536px] mx-auto w-full p-2.5 h-full overflow-hidden')}>
-      <div className="flex flex-col gap-y-3"></div>
+    <section className={twMerge(' max-w-[1536px] mx-auto w-full p-2.5 h-full overflow-hidden bg-base-white')}>
+      <Transactions />
     </section>
   );
 };
 
-export default Transactions;
+export default TransactionsPage;

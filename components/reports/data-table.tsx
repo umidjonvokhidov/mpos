@@ -68,7 +68,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     <div className="flex flex-col gap-3 border border-grey-100 p-2.5 rounded-[6px] h-full overflow-hidden">
       <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-3">
         <div className="flex flex-col items-start gap-y-1.5">
-          <h3 className="text-4xl text-base-black">Recent Transaction</h3>
+          <h3 className="text-4xl text-base-black">Report your Finance</h3>
           <p className="text-base text-grey-600">
             Be a good and honest employee for everyone's happiness
           </p>
@@ -84,9 +84,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                     : undefined,
                 )
             }
-            initialDateFrom={
-              new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-            }
+            initialDateFrom={new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
             initialDateTo={new Date().toISOString().split('T')[0]}
             align="start"
             locale="en-GB"
@@ -147,7 +145,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
       </div>
       <div className="flex flex-col gap-y-4 border border-[#DCDCDC] rounded-[6px] p-2.5 h-full overflow-hidden">
         <div className="flex justify-between items-center">
-          <h3 className="font-medium text-lg">Transactions</h3>
+          <h3 className="font-medium text-lg">Sales Result Report</h3>
         </div>
         <ScrollArea className="w-full overflow-hidden h-full pr-4">
           <ScrollBar orientation="horizontal" />

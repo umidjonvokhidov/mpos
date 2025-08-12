@@ -14,13 +14,18 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
       console.log(error);
     }
   },
-  fetchUserTransactions: async (id) => {
+  fetchUserTransactions: async (user) => {
     try {
-      const res = await axiosInstance.get(`${process.env.NEXT_PUBLIC_API_URL}/transactions`, {
-        params: {
-          id,
-        },
-      });
+      let res;
+      if (user.role === 'waiter') {
+        res = await axiosInstance.get(`${process.env.NEXT_PUBLIC_API_URL}/transactions`, {
+          params: {
+            id: user._id,
+          },
+        });
+      } else {
+        res = await axiosInstance.get(`${process.env.NEXT_PUBLIC_API_URL}/transactions`);
+      }
 
       if (res.data.success) {
         set({ transactions: res.data.data });
