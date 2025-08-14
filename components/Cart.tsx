@@ -11,6 +11,7 @@ import icons from '@/public/icons';
 import { useCart } from '@/stores';
 import { ScrollArea } from './ui/scroll-area';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   typeService: z.enum(['Delivery', 'Take Away', 'Dine In']),
@@ -29,6 +30,7 @@ const Cart = () => {
     setCartProperties,
   } = useCart();
   const [editMode, setEditMode] = useState(false);
+  const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -82,7 +84,7 @@ const Cart = () => {
       const res = await checkoutCart();
 
       if (res) {
-        console.log(res);
+        router.push(res);
       }
     } catch (error) {
       console.log(error);

@@ -2,7 +2,7 @@
 
 import { useAuth, useCart, useNotification, useProduct, useUI } from '@/stores';
 import Loading from '../loading';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 import React from 'react';
@@ -10,8 +10,7 @@ import Navbar from '@/components/Navbar';
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const router = useRouter();
-  const pathname = usePathname();
-  const { fetchUser, isAuthenticated, user, logout, login, register } = useAuth();
+  const { fetchUser, isAuthenticated } = useAuth();
   const { fetchNotifications } = useNotification();
   const { fetchCart } = useCart();
   const { fetchProducts } = useProduct();

@@ -29,18 +29,10 @@ const TotalIncome = () => {
   return (
     <ChartContainer config={chartConfig}>
       <BarChart data={chartData}>
-        <defs>
-          <linearGradient id="desktopGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#2563eb" stopOpacity={1} />
-            <stop offset="100%" stopColor="#fff" stopOpacity={0.8} />
-          </linearGradient>
-          <linearGradient id="mobileGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#000" stopOpacity={1} />
-            <stop offset="100%" stopColor="#fff" stopOpacity={0.8} />
-          </linearGradient>
-        </defs>
-        <Bar dataKey="desktop" fill="url(#desktopGradient)" radius={4} />
-        <Bar dataKey="mobile" fill="url(#mobileGradient)" radius={4} />
+        <ChartTooltip content={<ChartTooltipContent />} />
+
+        <Bar dataKey="desktop" fill="#d70000" radius={4} />
+        <Bar dataKey="mobile" fill="#00c714" radius={4} />
         <CartesianGrid vertical={false} />
         <XAxis
           dataKey="month"
@@ -50,7 +42,6 @@ const TotalIncome = () => {
           tickFormatter={(value) => value.slice(0, 3)}
         />
         <YAxis tickLine={false} axisLine={false} />
-        <ChartTooltip content={<ChartTooltipContent />} />
       </BarChart>
     </ChartContainer>
   );

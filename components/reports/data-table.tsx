@@ -67,13 +67,13 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   return (
     <div className="flex flex-col gap-3 border border-grey-100 p-2.5 rounded-[6px] h-full overflow-hidden">
       <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-3">
-        <div className="flex flex-col items-start gap-y-1.5">
+        <div className="flex flex-col items-start gap-y-1.5 w-full lg:w-auto">
           <h3 className="text-4xl text-base-black">Report your Finance</h3>
           <p className="text-base text-grey-600">
             Be a good and honest employee for everyone's happiness
           </p>
         </div>
-        <div className="flex items-center gap-x-3">
+        <div className="grid grid-cols-1 lg:flex items-center gap-3 w-full lg:w-auto">
           <DateRangePicker
             onUpdate={(values) =>
               table
@@ -84,13 +84,15 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                     : undefined,
                 )
             }
-            initialDateFrom={new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+            initialDateFrom={
+              new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+            }
             initialDateTo={new Date().toISOString().split('T')[0]}
             align="start"
             locale="en-GB"
             showCompare={false}
           />
-          <div className="w-full relative lg:max-w-[350px]">
+          <div className="w-full relative lg:max-w-[350px] md:col-start-1 md:row-start-2 md:col-span-2">
             <Image
               src={icons.search1}
               alt="search"

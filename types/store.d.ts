@@ -53,6 +53,7 @@ declare interface TransactionStore {
   fetchUserTransactions: (user: User) => Promise<boolean>;
   fetchAllTransactionReports: () => Promise<boolean>;
   fetchUserTransactionReports: (id: string) => Promise<boolean>;
+  getTransaction: (id: string) => Promise<Transaction>;
 }
 declare interface UIStore {
   isLoading: boolean;

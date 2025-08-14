@@ -121,6 +121,7 @@ export const useTransaction = () => {
   const fetchUserTransactionReports = useTransactionStore(
     (state: TransactionStore) => state.fetchUserTransactionReports,
   );
+  const getTransaction = useTransactionStore((state: TransactionStore) => state.getTransaction);
 
   return {
     transactions,
@@ -128,5 +129,6 @@ export const useTransaction = () => {
     fetchUserTransactions,
     fetchAllTransactionReports,
     fetchUserTransactionReports,
+    getTransaction,
   };
 };

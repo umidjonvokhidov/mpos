@@ -63,4 +63,15 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
       console.log(error);
     }
   },
+  getTransaction: async (id) => {
+    try {
+      const res = await axiosInstance.get(`${process.env.NEXT_PUBLIC_API_URL}/transactions/${id}`);
+
+      if (res.data.success) {
+        return res.data.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
 }));

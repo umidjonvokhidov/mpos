@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { create } from 'zustand';
 import axiosInstance from '@/lib/utils';
+import { toast } from 'sonner';
 
 export const useProductStore = create<ProductStore>((set, get) => ({
   products: [],
@@ -29,6 +30,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
       if (res.data.success) {
         await get().fetchProducts();
+        toast.success('Create Success', { description: 'Product addition successfully done!' });
         return res.data.success;
       }
     } catch (error) {
@@ -60,6 +62,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
       if (res.data.success) {
         await get().fetchProducts();
+        toast.success('Update Success', { description: 'Product update successfully done!' });
         return res.data.success;
       }
     } catch (error) {
@@ -72,6 +75,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
       if (res.data.success) {
         await get().fetchProducts();
+        toast.success('Delete Success', { description: 'Product deletion successfully done!' });
         return res.data.success;
       }
     } catch (error) {
