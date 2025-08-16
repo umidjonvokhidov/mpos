@@ -23,7 +23,7 @@ const Navbar = () => {
   return (
     <nav
       className={twMerge(
-        'bg-base-white w-full lg:rounded-t-[10px] min-h-14 p-2.5 max-w-[1536px] flex gap-3 justify-between items-center lg:flex-row flex-col mx-auto',
+        'bg-base-white w-full lg:rounded-t-[10px] p-2.5 max-w-[1536px] flex gap-3 justify-between items-center lg:flex-row flex-col mx-auto',
         pathname === '/products' && user && user.role === 'waiter' && 'lg:rounded-br-[10px]',
       )}
     >

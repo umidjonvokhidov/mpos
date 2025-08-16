@@ -21,25 +21,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
       return undefined;
     }
   },
-  // fetchRefreshToken: async () => {
-  //   try {
-  //     const res = await axios.post(
-  //       `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
-  //       {},
-  //       { withCredentials: true },
-  //     );
-
-  //     if (res.data.accessToken) {
-  //       localStorage.setItem('accessToken', res.data.accessToken);
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     return false;
-  //   }
-  // },
   logout: async () => {
     try {
       const res = await axios.post(

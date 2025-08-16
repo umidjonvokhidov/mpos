@@ -5,6 +5,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 import { Checkbox } from '../ui/checkbox';
+import Link from 'next/link';
 
 export const columns: ColumnDef<Transaction>[] = [
   {
@@ -103,7 +104,7 @@ export const columns: ColumnDef<Transaction>[] = [
       >
         <span>Service Type</span>
         <Image
-          src={icons.arrowUpDown1}  
+          src={icons.arrowUpDown1}
           alt="arrow-up-down"
           width={20}
           height={20}
@@ -160,6 +161,13 @@ export const columns: ColumnDef<Transaction>[] = [
           )}
         >{`${value || '-'}`}</span>
       );
+    },
+  },
+  {
+    accessorKey: 'Action',
+    header: ({ column }) => <span>Action</span>,
+    cell: (info) => {
+      return <Link href={String(info.getValue())} className='text-blue-400'>View Receipt</Link>;
     },
   },
 ];

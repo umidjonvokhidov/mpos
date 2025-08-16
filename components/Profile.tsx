@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/stores';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const Profile = () => {
   const { user, logout } = useAuth();
@@ -25,10 +26,11 @@ const Profile = () => {
       <DropdownMenuTrigger>
         <div className="flex items-center gap-x-1 cursor-pointer hover:bg-grey-50/80 transition-all duration-300 ease-in-out p-2.5 rounded-[6px]">
           <Image
-            src={user?.profilePicture ? user.profilePicture : '/images/avatar.png'}
+            src={user?.profilePicture ? user.profilePicture : '/images/avatar.jpg'}
             width={32}
             height={32}
             alt="avatar"
+            className='rounded-full'
           />
           <div className="flex-col items-start hidden xl:flex">
             <h4 className="text-xs font-medium leading-4 tracking-tight text-base-black">
@@ -49,10 +51,8 @@ const Profile = () => {
       <DropdownMenuContent className="mt-2 w-[200px] mr-6">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
-        <DropdownMenuItem>Subscription</DropdownMenuItem>
+        <DropdownMenuItem><Link href="/user/profile">Profile</Link></DropdownMenuItem>
+        <DropdownMenuItem><Link href="/user/settings">Settings</Link></DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOutUser()}>Logout</DropdownMenuItem>
       </DropdownMenuContent>

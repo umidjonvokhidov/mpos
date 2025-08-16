@@ -68,8 +68,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     <div className="flex flex-col gap-3 border border-grey-100 p-2.5 rounded-[6px] h-full overflow-hidden">
       <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-3">
         <div className="flex flex-col items-start gap-y-1.5 w-full lg:w-auto">
-          <h3 className="text-4xl text-base-black">Report your Finance</h3>
-          <p className="text-base text-grey-600">
+          <h3 className="text-2xl lg:text-4xl text-base-black">Report your Finance</h3>
+          <p className="text-sm lg:text-base text-grey-600">
             Be a good and honest employee for everyone's happiness
           </p>
         </div>
