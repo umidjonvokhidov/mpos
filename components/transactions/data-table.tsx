@@ -12,6 +12,14 @@ import {
   getPaginationRowModel,
 } from '@tanstack/react-table';
 import { useState } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/TransactionSuccessDialog';
 
 import {
   Table,
@@ -38,6 +46,9 @@ import {
 import { ChevronDown } from 'lucide-react';
 import { DateRangePicker } from '../ui/date-range-picker';
 import { exportToCSV, exportToExcel, exportToPDF } from '@/lib/exportUtils';
+import { twMerge } from 'tailwind-merge';
+import { Button } from '../ui/button';
+import { formatDateWithTime } from '@/lib/dateUtils';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -47,6 +58,8 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [orderDetails, setOrderDetails] = useState<Record<string, string> | null>(null);
+  const [open, setOpen] = useState(false);
 
   const table = useReactTable({
     data,
@@ -144,6 +157,67 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           </DropdownMenu>
         </div>
       </div>
+      <Dialog open={open}>
+        <DialogContent>
+          <DialogHeader className="flex justify-center w-full">
+            <DialogTitle className="flex flex-col items-center gap-y-[30px]">
+              <Image src="/images/logo-light.svg" width={81} height={30} alt="logo" />
+              <span className="text-center text-4xl font-satoshi font-normal">
+                Thank’s For Your Order
+              </span>
+            </DialogTitle>
+            <DialogDescription className="text-center mx-auto text-sm max-w-[200px]">
+              Be a good and honest employee for everyone's happiness
+            </DialogDescription>
+            <div className="flex flex-col gap-y-10">
+              <div className="mt-6 flex flex-col items-start gap-y-2.5">
+                <h4 className="text-base font-medium">Detail Transaction</h4>
+                <div className="flex flex-col gap-y-4 w-full">
+                  {orderDetails &&
+                    Object.entries(orderDetails).map(([key, value]) => (
+                      <div className="flex justify-between items-center w-full" key={key}>
+                        <h5 className="font-satoshi text-base text-grey-600">{key}</h5>
+                        <p
+                          className={twMerge(
+                            'font-satoshi',
+                            key === 'Status'
+                              ? [
+                                  'py-1 px-2.5 rounded-full capitalize text-sm',
+                                  value === 'completed'
+                                    ? 'bg-success-50 text-success-600'
+                                    : value === 'pending'
+                                      ? 'bg-warning-50 text-warning-600'
+                                      : value === 'declined'
+                                        ? 'bg-error-50 text-error-600'
+                                        : 'text-base-black bg-grey-100',
+                                ].join(' ')
+                              : 'text-base-black text-base',
+                          )}
+                        >
+                          {String(value)}
+                        </p>
+                      </div>
+                    ))}
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-x-3 items-center">
+                <Button
+                  className="h-9 border border-base-black hover:bg-base-white cursor-pointer rounded-[6px] bg-base-white hover:opacity-50 text-base-black"
+                  onClick={() => setOpen(false)}
+                >
+                  Receive
+                </Button>
+                <Button
+                  onClick={() => setOpen(false)}
+                  className="h-9 border-base-black border cursor-pointer rounded-[6px] bg-base-black text-base-white"
+                >
+                  Okay
+                </Button>
+              </div>
+            </div>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
       <div className="flex flex-col gap-y-4 border border-[#DCDCDC] rounded-[6px] p-2.5 h-full overflow-hidden">
         <div className="flex justify-between items-center">
           <h3 className="font-medium text-lg">Transactions</h3>
@@ -179,7 +253,30 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                       className="h-12"
                     >
                       {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id} className="first:pl-4">
+                        <TableCell
+                          key={cell.id}
+                          className="first:pl-4"
+                          onClick={() => {
+                            if (cell.column.id === 'Action') {
+                              const transaction = row.original as Transaction;
+                              const details = {
+                                'Transaction ID': transaction._id || '',
+                                Date:
+                                  (transaction.createdAt &&
+                                    formatDateWithTime(new Date(transaction.createdAt))) ||
+                                  '',
+                                'Type Services': transaction?.typeService,
+                                Total:
+                                  (transaction?.totalPrice &&
+                                    `$${transaction.totalPrice.toFixed(2)}`) ||
+                                  '',
+                                Status: transaction?.status,
+                              };
+                              setOrderDetails(details);
+                              setOpen(true);
+                            }
+                          }}
+                        >
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </TableCell>
                       ))}

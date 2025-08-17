@@ -11,10 +11,12 @@ import {
 import { useAuth } from '@/stores';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useState } from 'react';
 
 const Profile = () => {
   const { user, logout } = useAuth();
   const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   const signOutUser = async () => {
     await logout();
@@ -22,15 +24,15 @@ const Profile = () => {
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger asChild>
         <div className="flex items-center gap-x-1 cursor-pointer hover:bg-grey-50/80 transition-all duration-300 ease-in-out p-2.5 rounded-[6px]">
           <Image
             src={user?.profilePicture ? user.profilePicture : '/images/avatar.jpg'}
             width={32}
             height={32}
             alt="avatar"
-            className='rounded-full'
+            className="rounded-full"
           />
           <div className="flex-col items-start hidden xl:flex">
             <h4 className="text-xs font-medium leading-4 tracking-tight text-base-black">
@@ -51,10 +53,21 @@ const Profile = () => {
       <DropdownMenuContent className="mt-2 w-[200px] mr-6">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem><Link href="/user/profile">Profile</Link></DropdownMenuItem>
-        <DropdownMenuItem><Link href="/user/settings">Settings</Link></DropdownMenuItem>
+        <Link href="/user/profile" onClick={() => setOpen(false)}>
+          <DropdownMenuItem>Profile</DropdownMenuItem>
+        </Link>
+        <Link href="/user/settings" onClick={() => setOpen(false)}>
+          <DropdownMenuItem>Settings</DropdownMenuItem>
+        </Link>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOutUser()}>Logout</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            signOutUser();
+            setOpen(false);
+          }}
+        >
+          Logout
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

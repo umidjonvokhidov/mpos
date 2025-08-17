@@ -10,26 +10,28 @@ export const useAuth = () => {
   const isAuthenticated = useAuthStore((state: AuthStore) => state.isAuthenticated);
   const setUser = useAuthStore((state: AuthStore) => state.setUser);
   const fetchUser = useAuthStore((state: AuthStore) => state.fetchUser);
-  // const fetchRefreshToken = useAuthStore((state: AuthStore) => state.fetchRefreshToken);
   const logout = useAuthStore((state: AuthStore) => state.logout);
   const login = useAuthStore((state: AuthStore) => state.login);
   const register = useAuthStore((state: AuthStore) => state.register);
   const forgotPassword = useAuthStore((state: AuthStore) => state.forgotPassword);
   const verifyOTP = useAuthStore((state: AuthStore) => state.verifyOTP);
   const resetPassword = useAuthStore((state: AuthStore) => state.resetPassword);
+  const updateUser = useAuthStore((state: AuthStore) => state.updateUser);
+  const updateUserSettings = useAuthStore((state: AuthStore) => state.updateUserSettings);
 
   return {
     user,
     isAuthenticated,
     setUser,
     fetchUser,
-    // fetchRefreshToken,
     logout,
     login,
     register,
     forgotPassword,
     verifyOTP,
     resetPassword,
+    updateUser,
+    updateUserSettings
   };
 };
 

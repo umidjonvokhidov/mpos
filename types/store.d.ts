@@ -15,6 +15,8 @@ declare interface AuthStore {
   forgotPassword: (email: string) => Promise<boolean>;
   verifyOTP: (otp: string) => Promise<boolean>;
   resetPassword: (newPassword: string) => Promise<boolean>;
+  updateUser: (data: any) => Promise<boolean>;
+  updateUserSettings: (data: UserSettings) => Promise<boolean>;
 }
 
 declare interface NotificationStore {

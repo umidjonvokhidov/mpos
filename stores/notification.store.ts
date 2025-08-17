@@ -1,5 +1,6 @@
 import axiosInstance from '@/lib/utils';
 import { create } from 'zustand';
+import { toast } from 'sonner';
 
 export const useNotificationStore = create<NotificationStore>((set, get) => ({
   notifications: null,
@@ -16,7 +17,7 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
         return notifications as Notification[];
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred');
     }
   },
   markNotificationRead: async (id, userID) => {
@@ -31,7 +32,7 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred');
       return false;
     }
   },
@@ -47,7 +48,7 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred');
       return false;
     }
   },

@@ -10,7 +10,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from '@/components/ui/TransactionSuccessDialog';
 import Lottie from 'lottie-react';
 import { useRouter } from 'next/navigation';
 import { formatDateWithTime } from '@/lib/dateUtils';
@@ -39,11 +39,11 @@ const Products = () => {
         const transactionDate = transaction?.createdAt && new Date(transaction.createdAt);
 
         const details = {
-          'Transaction ID': transactionId,
+          'Transaction ID': transaction._id || '',
           Date: formatDateWithTime(transactionDate!),
-          'Type Services': transaction?.typeService || 'Dine in',
-          Total: transaction?.totalPrice ? `$${transaction.totalPrice.toFixed(2)}` : '$0.00',
-          'Payment Status': transaction?.paymentStatus || 'Completed',
+          'Type Services': transaction?.typeService,
+          Total: (transaction?.totalPrice && `$${transaction.totalPrice.toFixed(2)}`) || '',
+          'Payment Status': transaction?.paymentStatus,
         };
 
         setOrderDetails(details);
@@ -83,40 +83,42 @@ const Products = () => {
               <DialogDescription className="text-center text-sm">
                 Wait for us to Cook and serve it derecly to you
               </DialogDescription>
-              <div className="mt-6 flex flex-col items-start gap-y-2.5">
-                <h4 className="text-base font-medium">Detail Transaction</h4>
-                <div className="flex flex-col gap-y-4 w-full">
-                  {orderDetails &&
-                    Object.entries(orderDetails).map(([key, value]) => (
-                      <div className="flex justify-between items-center w-full" key={key}>
-                        <h5 className="font-satoshi text-base text-grey-600">{key}</h5>
-                        <p
-                          className={twMerge(
-                            'font-satoshi',
-                            key === 'Payment Status'
-                              ? 'py-1 px-2.5 rounded-full text-success-600 bg-success-50 capitalize text-sm'
-                              : 'text-base-black text-base',
-                          )}
-                        >
-                          {String(value)}
-                        </p>
-                      </div>
-                    ))}
+              <div className="flex flex-col gap-y-10">
+                <div className="mt-6 flex flex-col items-start gap-y-2.5">
+                  <h4 className="text-base font-medium">Detail Transaction</h4>
+                  <div className="flex flex-col gap-y-4 w-full">
+                    {orderDetails &&
+                      Object.entries(orderDetails).map(([key, value]) => (
+                        <div className="flex justify-between items-center w-full" key={key}>
+                          <h5 className="font-satoshi text-base text-grey-600">{key}</h5>
+                          <p
+                            className={twMerge(
+                              'font-satoshi',
+                              key === 'Payment Status'
+                                ? 'py-1 px-2.5 rounded-full text-success-600 bg-success-50 capitalize text-sm'
+                                : 'text-base-black text-base',
+                            )}
+                          >
+                            {String(value)}
+                          </p>
+                        </div>
+                      ))}
+                  </div>
                 </div>
-              </div>
-              <div className="grid grid-cols-2 gap-x-3 items-center">
-                <Button
-                  className="h-9 border border-base-black hover:bg-base-white cursor-pointer rounded-[6px] bg-base-white hover:opacity-50 text-base-black"
-                  onClick={() => setOpen(false)}
-                >
-                  Receive
-                </Button>
-                <Button
-                  onClick={() => setOpen(false)}
-                  className="h-9 border-base-black border cursor-pointer rounded-[6px] bg-base-black text-base-white"
-                >
-                  Okay
-                </Button>
+                <div className="grid grid-cols-2 gap-x-3 items-center">
+                  <Button
+                    className="h-9 border border-base-black hover:bg-base-white cursor-pointer rounded-[6px] bg-base-white hover:opacity-50 text-base-black"
+                    onClick={() => setOpen(false)}
+                  >
+                    Receive
+                  </Button>
+                  <Button
+                    onClick={() => setOpen(false)}
+                    className="h-9 border-base-black border cursor-pointer rounded-[6px] bg-base-black text-base-white"
+                  >
+                    Okay
+                  </Button>
+                </div>
               </div>
             </DialogHeader>
           </DialogContent>

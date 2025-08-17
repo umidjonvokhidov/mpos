@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 import { create } from 'zustand';
 import axiosInstance from '@/lib/utils';
 
-export const useAuthStore = create<AuthStore>((set) => ({
+export const useAuthStore = create<AuthStore>((set, get) => ({
   isAuthenticated: false,
   user: null,
   setUser: (isAuthenticated, user) => {
@@ -127,6 +127,43 @@ export const useAuthStore = create<AuthStore>((set) => ({
         toast.success(
           'Your password has been reset successfully! You can now sign in with your new password.',
         );
+      }
+      return res.data.success;
+    } catch (error: any) {
+      toast.error(error?.response?.data?.error);
+    }
+  },
+  updateUser: async (data) => {
+    try {
+      const res = await axiosInstance.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/${get().user?._id}`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+
+      if (res.data.success) {
+        await get().fetchUser();
+        console.log(res.data);
+      }
+      return res.data.success;
+    } catch (error: any) {
+      toast.error(error?.response?.data?.error);
+    }
+  },
+  updateUserSettings: async (data: UserSettings) => {
+    try {
+      const res = await axiosInstance.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/settings/user/${get().user?._id}`,
+        data,
+      );
+
+      if (res.data.success) {
+        await get().fetchUser();
+        console.log(res.data);
       }
       return res.data.success;
     } catch (error: any) {

@@ -1,5 +1,6 @@
 import axiosInstance from '@/lib/utils';
 import { create } from 'zustand';
+import { toast } from 'sonner';
 
 export const useTransactionStore = create<TransactionStore>((set, get) => ({
   transactions: [],
@@ -11,7 +12,7 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
     }
   },
   fetchUserTransactions: async (user) => {
@@ -29,12 +30,11 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
 
       if (res.data.success) {
         set({ transactions: res.data.data });
-        console.log(res.data.data);
 
         return res.data.success;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
     }
   },
   fetchAllTransactionReports: async () => {
@@ -47,7 +47,7 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
     }
   },
   fetchUserTransactionReports: async (id) => {
@@ -60,7 +60,7 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
     }
   },
   getTransaction: async (id) => {
@@ -71,7 +71,7 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
         return res.data.data;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
     }
   },
 }));

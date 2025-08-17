@@ -1,12 +1,12 @@
 'use client';
 
 import StatisticCard from '@/components/StatisticCard';
-import { Button } from '@/components/ui/button';
 import { statistics } from '@/constants';
 import getStatisticsDashboard from '@/lib/getStatisticsDashboard';
 import { useAuth, useTransaction } from '@/stores';
 import Image from 'next/image';
-import Link from 'next/link';
+
+import ProfileForm from '@/components/ProfileForm';
 
 const ProfileStatistics = () => {
   const { user } = useAuth();
@@ -15,18 +15,17 @@ const ProfileStatistics = () => {
   let statisticData = getStatisticsDashboard(statistics, transactions);
 
   return (
-    <section className="flex flex-col gap-y-5 mx-auto bg-base-black w-full rounded-[12px] p-2.5 lg:p-6">
-      <div className="flex items-start flex-col lg:flex-row lg:justify-between lg:items-center gap-y-4">
+    <section className="flex flex-col gap-y-5 mx-auto bg-base-black w-full rounded-[12px] p-2.5 lg:p-6 overflow-hidden">
+      <div className="flex items-start flex-col lg:flex-row lg:justify-between lg:items-center gap-y-4 overflow-hidden">
         <div className="flex gap-x-6 items-start">
           <Image
-            src={user?.profilePicture ? user.profilePicture : '/images/avatar.jpg'}
-            sizes="100vw"
-            unoptimized
-            width={0}
-            height={0}
+            src={user?.profilePicture ? user.profilePicture : '/images/avatar.jpg'}            
+            width={102}
+            height={102}
             className="rounded-full max-w-[102px] max-h-[102px] size-full min-h-[61px] min-w-[61px]"
             alt="Profile Picture"
           />
+          
           <div className="flex flex-col gap-y-4">
             <div className="flex flex-col gap-y-1.5">
               <div className="flex items-start gap-x-4">
@@ -37,12 +36,12 @@ const ProfileStatistics = () => {
               </div>
               <p className="text-grey-600 text-base">{user?.email}</p>
             </div>
-            <Button className="bg-transparent hidden lg:block text-base-white py-2.5 px-6 border cursor-pointer border-grey-900 rounded-[6px]">
-              Edit Profile
-            </Button>
+            <div className="hidden lg:block">
+              <ProfileForm />
+            </div>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-y-4 lg:items-end lg:gap-y-12">
+        <div className="flex flex-col items-center gap-y-4 lg:items-end lg:gap-y-12 lg:w-auto w-full lg:justify-stretch justify-between">
           <div className="text-base text-grey-500">
             Birthday
             <span className="text-base-white ml-2.5">10/18/2025</span>
@@ -67,9 +66,9 @@ const ProfileStatistics = () => {
             </div>
           </div>
         </div>
-        <Button className="bg-transparent block lg:hidden w-full text-base-white py-2.5 px-6 border cursor-pointer border-grey-900 rounded-[6px]">
-          Edit Profile
-        </Button>
+        <div className="block lg:hidden w-full">
+          <ProfileForm />
+        </div>
       </div>
       <div className="grid grid-cols-2 gap-2 lg:grid-cols-4 lg:gap-5">
         {statisticData.map((statistic: StatisticType) => (

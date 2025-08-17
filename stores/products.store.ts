@@ -12,12 +12,11 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       const products = res.data.data;
 
       if (res.data.success) {
-        console.log(products);
         set({ products: products });
         return products;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
     }
   },
   createProduct: async (data: ProductFormValues) => {
@@ -30,11 +29,11 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
       if (res.data.success) {
         await get().fetchProducts();
-        toast.success('Create Success', { description: 'Product addition successfully done!' });
+        toast.success('Create Success');
         return res.data.success;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
     }
   },
   getProduct: async (id) => {
@@ -45,7 +44,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
         return res.data.data;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
     }
   },
   updateProduct: async (id, data) => {
@@ -62,11 +61,11 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
       if (res.data.success) {
         await get().fetchProducts();
-        toast.success('Update Success', { description: 'Product update successfully done!' });
+        toast.success('Update Success');
         return res.data.success;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
     }
   },
   deleteProduct: async (id) => {
@@ -75,11 +74,11 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
       if (res.data.success) {
         await get().fetchProducts();
-        toast.success('Delete Success', { description: 'Product deletion successfully done!' });
+        toast.success('Delete Success');
         return res.data.success;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
     }
   },
 }));

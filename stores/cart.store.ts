@@ -10,12 +10,11 @@ export const useCartStore = create<CartStore>((set, get) => ({
       const res = await axiosInstance.get(`${process.env.NEXT_PUBLIC_API_URL}/cart`);
 
       if (res.data.success) {
-        console.log('cart: ', res.data.data);
         set({ cart: res.data.data });
         return res.data.data;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred');
     }
   },
   addToCart: async (id) => {
@@ -29,7 +28,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred');
       return false;
     }
   },
@@ -39,13 +38,13 @@ export const useCartStore = create<CartStore>((set, get) => ({
         productId: id,
       });
 
-      console.log(res);
+      toast.info('Response');
       if (res.data.success) {
         get().fetchCart();
         return res.data.success;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred');
       return false;
     }
   },
@@ -53,13 +52,13 @@ export const useCartStore = create<CartStore>((set, get) => ({
     try {
       const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_API_URL}/cart/clear`, {});
 
-      console.log(res);
+      toast.info('Response');
       if (res.data.success) {
         get().fetchCart();
         return res.data.success;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred');
       return false;
     }
   },
@@ -70,13 +69,13 @@ export const useCartStore = create<CartStore>((set, get) => ({
         { productId: id },
       );
 
-      console.log(res);
+      toast.info('Response');
       if (res.data.success) {
         get().fetchCart();
         return res.data.success;
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred');
       return false;
     }
   },
@@ -94,7 +93,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
         get().setCartProperties();
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred');
     }
   },
   clearCartProperties: () => {
@@ -115,7 +114,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
           },
         );
 
-        console.log(res.data);
+        toast.success('Operation successful');
 
         if (res.data.success) {
           get().fetchCart();
@@ -123,10 +122,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
           return res.data.url;
         }
       } else {
-        console.log('Cart properties are not set');
+        toast.error('Cart properties are not set');
       }
     } catch (error) {
-      console.log(error);
+      toast.error('An error occurred');
     }
   },
 }));
