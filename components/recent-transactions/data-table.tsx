@@ -117,7 +117,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         </div>
         <ScrollArea className="w-full overflow-hidden h-full pr-4">
           <ScrollBar orientation="horizontal" />
-          <div className="py-4">
+          <div className="py-4 h-full">
             <Table className="rounded-2xl px-3">
               <TableHeader className="py-3 h-12">
                 {table.getHeaderGroups().map((headerGroup) => (

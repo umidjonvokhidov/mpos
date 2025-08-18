@@ -11,7 +11,7 @@ const TransactionsPage = () => {
   }
 
   return (
-    <section className={twMerge(' max-w-[1536px] mx-auto w-full p-2.5 h-full overflow-hidden bg-base-white')}>
+    <section className={twMerge(' max-w-[1536px] mx-auto w-full p-2.5 h-screen rounded-b-[10px] overflow-hidden bg-base-white')}>
       <Transactions />
     </section>
   );
