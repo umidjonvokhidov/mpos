@@ -14,7 +14,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
         return res.data.data;
       }
     } catch (error) {
-      toast.error('An error occurred');
+      console.log(error)
     }
   },
   addToCart: async (id) => {
@@ -28,7 +28,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      toast.error('An error occurred');
+      console.log(error);
       return false;
     }
   },
@@ -44,7 +44,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      toast.error('An error occurred');
+      console.log(error);
       return false;
     }
   },
@@ -58,7 +58,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      toast.error('An error occurred');
+      console.log(error);
       return false;
     }
   },
@@ -75,7 +75,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      toast.error('An error occurred');
+      console.log(error);
       return false;
     }
   },
@@ -93,7 +93,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
         get().setCartProperties();
       }
     } catch (error) {
-      toast.error('An error occurred');
+      console.log(error);
     }
   },
   clearCartProperties: () => {
@@ -121,11 +121,9 @@ export const useCartStore = create<CartStore>((set, get) => ({
           get().clearCartProperties();
           return res.data.url;
         }
-      } else {
-        toast.error('Cart properties are not set');
       }
     } catch (error) {
-      toast.error('An error occurred');
+      console.log(error);
     }
   },
 }));

@@ -78,8 +78,8 @@ const SettingsPage = () => {
   };
 
   return (
-    <section className="max-w-[1536px] bg-grey-100 p-2.5 lg:p-0">
-      <div className="flex flex-col gap-y-6 bg-base-white p-2.5 rounded-[6px] lg:rounded-none">
+    <section className="max-w-[1536px] bg-grey-100 p-2.5 lg:p-0  mx-auto w-full">
+      <div className="flex flex-col gap-y-6 bg-base-white p-2.5 rounded-[6px] lg:rounded-none lg:rounded-b-[6px]">
         <div className="flex flex-col gap-y-1.5">
           <h1 className="font-satoshi text-4xl text-base-black">Settings</h1>
           <p className="font-satoshi text-base text-grey-600">

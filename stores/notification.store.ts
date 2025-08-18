@@ -17,7 +17,7 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
         return notifications as Notification[];
       }
     } catch (error) {
-      toast.error('An error occurred');
+      console.log(error);
     }
   },
   markNotificationRead: async (id, userID) => {
@@ -32,7 +32,7 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      toast.error('An error occurred');
+      console.log(error);
       return false;
     }
   },
@@ -48,7 +48,7 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      toast.error('An error occurred');
+      console.log(error);
       return false;
     }
   },

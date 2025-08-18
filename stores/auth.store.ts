@@ -36,7 +36,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       }
       return res.data.success;
     } catch (error: any) {
-      toast.error(error?.response?.data?.error);
+      console.log(error)
     }
   },
   login: async (email, password, remember) => {
@@ -59,7 +59,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
       return res.data.success;
     } catch (error: any) {
-      toast.error(error?.response?.data?.error);
+      console.log(error);
     }
   },
   register: async (firstname, lastname, email, password) => {
@@ -78,7 +78,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       }
       return res.data.success;
     } catch (error: any) {
-      toast.error(error?.response?.data?.error);
+      console.log(error);
     }
   },
   forgotPassword: async (email) => {
@@ -96,7 +96,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
       return res.data.success;
     } catch (error: any) {
-      toast.error(error?.response?.data?.error);
+      console.log(error);
     }
   },
   verifyOTP: async (otp) => {
@@ -112,7 +112,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
       return res.data.success;
     } catch (error: any) {
-      toast.error(error?.response?.data?.error);
+      console.log(error);
     }
   },
   resetPassword: async (newPassword) => {
@@ -130,7 +130,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       }
       return res.data.success;
     } catch (error: any) {
-      toast.error(error?.response?.data?.error);
+      console.log(error);
     }
   },
   updateUser: async (data) => {
@@ -151,7 +151,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       }
       return res.data.success;
     } catch (error: any) {
-      toast.error(error?.response?.data?.error);
+      console.log(error);
     }
   },
   updateUserSettings: async (data: UserSettings) => {
@@ -167,7 +167,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       }
       return res.data.success;
     } catch (error: any) {
-      toast.error(error?.response?.data?.error);
+      console.log(error);
     }
   },
 }));

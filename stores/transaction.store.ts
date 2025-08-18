@@ -12,7 +12,7 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
+      console.log(error);
     }
   },
   fetchUserTransactions: async (user) => {
@@ -34,7 +34,7 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
+      console.log(error);
     }
   },
   fetchAllTransactionReports: async () => {
@@ -47,7 +47,7 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
+      console.log(error);
     }
   },
   fetchUserTransactionReports: async (id) => {
@@ -60,7 +60,7 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
+      console.log(error);
     }
   },
   getTransaction: async (id) => {
@@ -71,7 +71,7 @@ export const useTransactionStore = create<TransactionStore>((set, get) => ({
         return res.data.data;
       }
     } catch (error) {
-      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
+      console.log(error);
     }
   },
 }));

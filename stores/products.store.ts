@@ -16,7 +16,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
         return products;
       }
     } catch (error) {
-      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
+      console.log(error);
     }
   },
   createProduct: async (data: ProductFormValues) => {
@@ -33,7 +33,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
+      console.log(error);
     }
   },
   getProduct: async (id) => {
@@ -44,7 +44,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
         return res.data.data;
       }
     } catch (error) {
-      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
+      console.log(error);
     }
   },
   updateProduct: async (id, data) => {
@@ -65,7 +65,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
+      console.log(error);
     }
   },
   deleteProduct: async (id) => {
@@ -78,7 +78,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
         return res.data.success;
       }
     } catch (error) {
-      toast.error('An error occurred', { description: (typeof error === 'object' && error && 'message' in error ? (error as any).message : String(error)) });
+      console.log(error);
     }
   },
 }));
