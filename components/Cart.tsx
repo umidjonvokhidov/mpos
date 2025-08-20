@@ -94,7 +94,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="flex max-lg:row-start-1 flex-col overflow-y-hidden justify-between h-auto rounded-t-[10px] lg:rounded-[10px] bg-base-white lg:ml-2.5 lg:mt-2.5 p-2.5">
+    <div className="flex flex-col row-start-1 lg:row-auto overflow-y-hidden justify-between h-auto rounded-t-[10px] lg:rounded-[10px] bg-base-white lg:ml-2.5 lg:mt-2.5 p-2.5">
       <div className="flex flex-col gap-y-5 h-full overflow-y-hidden">
         <div className="flex flex-col gap-y-3">
           <div className="flex justify-between items-center">
