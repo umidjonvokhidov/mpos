@@ -4,7 +4,7 @@ import ProfileStatistics from '@/sections/ProfileStatistics';
 
 const ProfilePage = () => {
   return (
-    <ScrollArea className="p-1.5 lg:pb-2.5 lg:px-6 lg:pt-6 bg-base-white h-full rounded-b-[10px] max-w-[1536px]  mx-auto w-full overflow-hidden">
+    <ScrollArea className="p-1.5 lg:pb-2.5 lg:px-6 lg:pt-6 bg-base-white h-screen rounded-b-[10px] max-w-[1536px]  mx-auto w-full overflow-hidden">
       <div className="flex flex-col gap-y-2.5 lg:gap-y-5">
         <div className="flex flex-col gap-y-1.5 items-start">
           <h2 className="text-2xl lg:text-4xl text-base-black">Detail Profile</h2>
