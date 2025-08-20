@@ -78,7 +78,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       }
       return res.data.success;
     } catch (error: any) {
-      console.log(error);
+      toast.error(error.response.data.error);
     }
   },
   forgotPassword: async (email) => {
@@ -96,7 +96,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
       return res.data.success;
     } catch (error: any) {
-      console.log(error);
+      toast.error(error.response.data.error);
     }
   },
   verifyOTP: async (otp) => {
@@ -112,7 +112,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
       return res.data.success;
     } catch (error: any) {
-      console.log(error);
+      toast.error(error.response.data.error);
     }
   },
   resetPassword: async (newPassword) => {
@@ -130,7 +130,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       }
       return res.data.success;
     } catch (error: any) {
-      console.log(error);
+      toast.error(error.response.data.error);
     }
   },
   updateUser: async (data) => {
@@ -144,14 +144,13 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
           },
         },
       );
-
       if (res.data.success) {
         await get().fetchUser();
         console.log(res.data);
       }
       return res.data.success;
     } catch (error: any) {
-      console.log(error);
+      toast.error(error.response.data.error);
     }
   },
   updateUserSettings: async (data: UserSettings) => {
@@ -167,7 +166,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       }
       return res.data.success;
     } catch (error: any) {
-      console.log(error);
+      toast.error(error.response.data.error);
     }
   },
 }));
