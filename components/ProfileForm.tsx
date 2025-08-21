@@ -69,7 +69,8 @@ const formSchema = z
       .min(10, {
         message: 'Phone number must be at least 10 digits.',
       })
-      .optional(),
+      .optional()
+      .or(z.literal("")),
     oldPassword: z.string().optional(),
     newPassword: z.string().optional(),
   })
