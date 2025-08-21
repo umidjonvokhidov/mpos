@@ -119,7 +119,7 @@ const ProfileForm = () => {
       role: user?.role,
       email: user?.email || '',
       profilePicture: user?.profilePicture || undefined,
-      phoneNumber: user?.phoneNumber || '',
+      phoneNumber: user?.phoneNumber || undefined,
       oldPassword: '',
       newPassword: '',
     },
