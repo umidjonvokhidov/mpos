@@ -25,6 +25,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import Lottie from 'lottie-react';
+import TrailLoading from '@/public/lotties/TrailLoading.json';
+
 
 export enum Categories {
   All = 'All',
@@ -35,7 +38,7 @@ export enum Categories {
 }
 
 const ProductsContainer = () => {
-  const { products, createProduct } = useProduct();
+  const { products, createProduct, isProductLoading } = useProduct();
   const [filter, setFilter] = useState('');
   const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
@@ -135,7 +138,7 @@ const ProductsContainer = () => {
       </div>
       <ScrollArea className="w-full h-full overflow-hidden pr-4">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {products && products.length > 0 ? (
+          {isProductLoading ? <Lottie className="w-20 h-20 mx-auto" animationData={TrailLoading} loop={true} /> : products && products.length > 0 ? (
             products
               .filter((p) => (filter !== '' ? p.category === filter : true))
               .filter((p) =>

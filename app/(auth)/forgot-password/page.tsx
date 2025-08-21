@@ -12,6 +12,9 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/stores';
+import InsiderLoadingWhite from "@/public/lotties/InsiderLoadingWhite.json"
+import Lottie from 'lottie-react';
+
 
 const formSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -19,7 +22,7 @@ const formSchema = z.object({
 
 const forgotPassword = () => {
   const router = useRouter();
-  const { forgotPassword } = useAuth();
+  const { forgotPassword, isUserLoading } = useAuth();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -65,9 +68,11 @@ const forgotPassword = () => {
             />
             <Button
               type="submit"
+              disabled={isUserLoading}
               className="w-full h-[42px] rounded-[6px] mt-1.5 bg-base-black text-sm font-normal leading-[18px] tracking-tight text-base-white cursor-pointer"
             >
-              Send Verification Code
+              
+              {isUserLoading ? <span className='flex items-center translate-x-5'>Sending Verification Code<Lottie className='-translate-x-5 w-[70px] h-[70px]' animationData={InsiderLoadingWhite} loop={true}/></span> : 'Send Verification Code'}
             </Button>
           </form>
         </div>

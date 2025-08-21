@@ -18,9 +18,11 @@ export const useAuth = () => {
   const resetPassword = useAuthStore((state: AuthStore) => state.resetPassword);
   const updateUser = useAuthStore((state: AuthStore) => state.updateUser);
   const updateUserSettings = useAuthStore((state: AuthStore) => state.updateUserSettings);
+  const isUserLoading = useAuthStore((state: AuthStore) => state.isUserLoading);
 
   return {
     user,
+    isUserLoading,
     isAuthenticated,
     setUser,
     fetchUser,
@@ -56,9 +58,13 @@ export const useNotification = () => {
   const markAllNotificationsRead = useNotificationStore(
     (state: NotificationStore) => state.markAllNotificationsRead,
   );
+  const isNotificationLoading = useNotificationStore(
+    (state: NotificationStore) => state.isNotificationLoading,
+  );
 
   return {
     notifications,
+    isNotificationLoading,
     fetchNotifications,
     markNotificationRead,
     markAllNotificationsRead,
@@ -71,9 +77,11 @@ export const useProduct = () => {
   const createProduct = useProductStore((state: ProductStore) => state.createProduct);
   const updateProduct = useProductStore((state: ProductStore) => state.updateProduct);
   const deleteProduct = useProductStore((state: ProductStore) => state.deleteProduct);
+  const isProductLoading = useProductStore((state: ProductStore) => state.isProductLoading);
 
   return {
     products,
+    isProductLoading,
     fetchProducts,
     createProduct,
     updateProduct,
@@ -93,10 +101,12 @@ export const useCart = () => {
   const setCartProperties = useCartStore((state: CartStore) => state.setCartProperties);
   const clearCartProperties = useCartStore((state: CartStore) => state.clearCartProperties);
   const checkoutCart = useCartStore((state: CartStore) => state.checkoutCart);
+  const isCartLoading = useCartStore((state: CartStore) => state.isCartLoading);
 
   return {
     cart,
     cartProperties,
+    isCartLoading,
     setCartProperties,
     clearCartProperties,
     fetchCart,
@@ -111,9 +121,6 @@ export const useCart = () => {
 
 export const useTransaction = () => {
   const transactions = useTransactionStore((state: TransactionStore) => state.transactions);
-  const fetchAllTransactions = useTransactionStore(
-    (state: TransactionStore) => state.fetchAllTransactions,
-  );
   const fetchUserTransactions = useTransactionStore(
     (state: TransactionStore) => state.fetchUserTransactions,
   );
@@ -124,10 +131,11 @@ export const useTransaction = () => {
     (state: TransactionStore) => state.fetchUserTransactionReports,
   );
   const getTransaction = useTransactionStore((state: TransactionStore) => state.getTransaction);
+  const isTransactionLoading = useTransactionStore((state: TransactionStore) => state.isTransactionLoading);
 
   return {
     transactions,
-    fetchAllTransactions,
+    isTransactionLoading,
     fetchUserTransactions,
     fetchAllTransactionReports,
     fetchUserTransactionReports,

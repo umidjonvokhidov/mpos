@@ -5,24 +5,30 @@ import axiosInstance from '@/lib/utils';
 
 export const useAuthStore = create<AuthStore>((set, get) => ({
   isAuthenticated: false,
+  isUserLoading: false,
   user: null,
   setUser: (isAuthenticated, user) => {
     set({ isAuthenticated, user });
   },
   fetchUser: async () => {
     try {
+      set({ isUserLoading: true });
       const res = await axiosInstance.get(`${process.env.NEXT_PUBLIC_API_URL}/users/me`);
 
-      const user = res.data.user as User;
-      set({ user, isAuthenticated: true });
-      return user;
+      if (res.data.success) {
+        const user = res.data.user as User;
+        set({ user, isAuthenticated: true, isUserLoading: false });
+        return user;
+      }
     } catch (error) {
       console.log(error);
+      set({ isUserLoading: false });
       return undefined;
     }
   },
   logout: async () => {
     try {
+      set({ isUserLoading: true });
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/sign-out`,
         {},
@@ -33,14 +39,17 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
       if (res.data.success) {
         toast.success('You have been logged out successfully.');
+        set({ isUserLoading: false });
+        return res.data.success;
       }
-      return res.data.success;
     } catch (error: any) {
+      set({ isUserLoading: false });
       console.log(error);
     }
   },
   login: async (email, password, remember) => {
     try {
+      set({ isUserLoading: true });
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/sign-in`,
         {
@@ -54,16 +63,18 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       if (res.data.success) {
         toast.success('You have been logged in successfully!');
         localStorage.setItem('accessToken', res.data.data.token);
-        set({ user: res.data.data.user, isAuthenticated: true });
+        set({ user: res.data.data.user, isAuthenticated: true, isUserLoading: false });
       }
 
       return res.data.success;
     } catch (error: any) {
+      set({ isUserLoading: false });
       toast.error(error.response.data.error);
     }
   },
   register: async (firstname, lastname, email, password) => {
     try {
+      set({ isUserLoading: true });
       const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/sign-up`, {
         firstname,
         lastname,
@@ -72,23 +83,26 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       });
 
       if (res.data.success) {
-        set({ user: res.data.data.user, isAuthenticated: true });
+        set({ user: res.data.data.user, isAuthenticated: true, isUserLoading: false });
         toast.success('You have been registered successfully!');
         localStorage.setItem('accessToken', res.data.data.token);
       }
       return res.data.success;
     } catch (error: any) {
+      set({ isUserLoading: false });
       toast.error(error.response.data.error);
     }
   },
   forgotPassword: async (email) => {
     try {
+      set({ isUserLoading: true });
       const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`, {
         email,
       });
 
       if (res.data.success) {
         localStorage.setItem('email', email);
+        set({ isUserLoading: false });
         toast.success(
           'A 6-digit reset code has been sent to your email. It will expire in 10 minutes.',
         );
@@ -96,27 +110,32 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
       return res.data.success;
     } catch (error: any) {
+      set({ isUserLoading: false });
       toast.error(error.response.data.error);
     }
   },
   verifyOTP: async (otp) => {
     try {
+      set({ isUserLoading: true });
       const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/verify-otp`, {
         email: localStorage.getItem('email'),
         otp,
       });
 
       if (res.data.success) {
+        set({ isUserLoading: false });
         toast.success('Code verified successfully! You may now reset your password.');
       }
 
       return res.data.success;
     } catch (error: any) {
+      set({ isUserLoading: false });
       toast.error(error.response.data.error);
     }
   },
   resetPassword: async (newPassword) => {
     try {
+      set({ isUserLoading: true });
       const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`, {
         email: localStorage.getItem('email'),
         newPassword,
@@ -124,17 +143,20 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
       if (res.data.success) {
         localStorage.removeItem('email');
+        set({ isUserLoading: false });
         toast.success(
           'Your password has been reset successfully! You can now sign in with your new password.',
         );
       }
       return res.data.success;
     } catch (error: any) {
+      set({ isUserLoading: false });
       toast.error(error.response.data.error);
     }
   },
   updateUser: async (data) => {
     try {
+      set({ isUserLoading: true });
       const res = await axiosInstance.put(
         `${process.env.NEXT_PUBLIC_API_URL}/users/${get().user?._id}`,
         data,
@@ -146,15 +168,18 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       );
       if (res.data.success) {
         await get().fetchUser();
+        set({ isUserLoading: false });
         console.log(res.data);
       }
       return res.data.success;
     } catch (error: any) {
+      set({ isUserLoading: false });
       toast.error(error.response.data.error);
     }
   },
   updateUserSettings: async (data: UserSettings) => {
     try {
+      set({ isUserLoading: true });
       const res = await axiosInstance.put(
         `${process.env.NEXT_PUBLIC_API_URL}/users/settings/user/${get().user?._id}`,
         data,
@@ -162,10 +187,12 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
       if (res.data.success) {
         await get().fetchUser();
+        set({ isUserLoading: false });
         console.log(res.data);
       }
       return res.data.success;
     } catch (error: any) {
+      set({ isUserLoading: false });
       toast.error(error.response.data.error);
     }
   },

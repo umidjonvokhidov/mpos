@@ -6,7 +6,7 @@ import { DataTable } from './data-table';
 import { useEffect } from 'react';
 
 const Transactions = () => {
-  const { transactions, fetchUserTransactions } = useTransaction();
+  const { transactions, fetchUserTransactions, isTransactionLoading } = useTransaction();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Transactions = () => {
 
     fetchData();
   }, []);
-  return transactions && <DataTable columns={columns} data={transactions} />;
+  return transactions && <DataTable columns={columns} data={transactions} loading={isTransactionLoading} />;
 };
 
 export default Transactions;

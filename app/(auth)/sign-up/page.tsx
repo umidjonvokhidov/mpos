@@ -13,6 +13,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '@/stores';
 import { useRouter } from 'next/navigation';
+import InsiderLoadingWhite from "@/public/lotties/InsiderLoadingWhite.json"
+import Lottie from 'lottie-react';
+
 
 const formSchema = z
   .object({
@@ -29,7 +32,7 @@ const formSchema = z
 
 const SignUp = () => {
   const router = useRouter();
-  const { register } = useAuth();
+  const { register, isUserLoading } = useAuth();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -128,9 +131,10 @@ const SignUp = () => {
             />
             <Button
               type="submit"
+              disabled={isUserLoading}
               className="w-full h-[42px] rounded-[6px] mt-1.5 bg-base-black text-sm font-normal leading-[18px] tracking-tight text-base-white cursor-pointer"
             >
-              Sign Up
+               {isUserLoading ? <span className='flex items-center translate-x-5'>Signing Up<Lottie className='-translate-x-5 w-[70px] h-[70px]' animationData={InsiderLoadingWhite} loop={true}/></span> : 'Sign Up'}
             </Button>
           </form>
           <p className="text-sm font-normal leading-[18px] tracking-tight text-grey-600">

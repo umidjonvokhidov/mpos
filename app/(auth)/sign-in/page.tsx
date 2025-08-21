@@ -21,6 +21,8 @@ import Image from 'next/image';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useAuth } from '@/stores';
 import { useRouter } from 'next/navigation';
+import Lottie from 'lottie-react';
+import InsiderLoadingWhite from "@/public/lotties/InsiderLoadingWhite.json"
 
 const formSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -30,7 +32,7 @@ const formSchema = z.object({
 
 const SignIn = () => {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, isUserLoading } = useAuth();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,7 +47,7 @@ const SignIn = () => {
       const { email, password, remember } = values;
       const success = await login(email, password, remember);
 
-      if (success) router.push("/");
+      if (success) router.push('/');
     } catch (error) {
       console.log(error);
     }
@@ -58,7 +60,9 @@ const SignIn = () => {
           <div className="flex flex-col items-center">
             <Image src="images/Logo.svg" alt="Logo" width={30} height={30} className="mb-2.5" />
             <h4 className="text-2xl font-medium leading-10 tracking-tight mb-2">Welcome Back!</h4>
-            <p className="text-sm font-normal leading-[18px] tracking-tight text-gray-600">Please Enter your detail to sign in</p>
+            <p className="text-sm font-normal leading-[18px] tracking-tight text-gray-600">
+              Please Enter your detail to sign in
+            </p>
           </div>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-y-2.5">
             <FormField
@@ -98,7 +102,10 @@ const SignIn = () => {
                       Remember account
                     </FormLabel>
                   </div>
-                  <Link href="/forgot-password" className="text-xs font-normal leading-4 tracking-tight text-grey-600">
+                  <Link
+                    href="/forgot-password"
+                    className="text-xs font-normal leading-4 tracking-tight text-grey-600"
+                  >
                     Forgot Password
                   </Link>
                 </FormItem>
@@ -106,9 +113,10 @@ const SignIn = () => {
             />
             <Button
               type="submit"
+              disabled={isUserLoading}
               className="w-full h-[42px] rounded-[6px] mt-1.5 bg-base-black text-sm font-normal leading-[18px] tracking-tight text-base-white cursor-pointer"
             >
-              Sign In
+              {isUserLoading ? <span className='flex items-center translate-x-5'>Signing In<Lottie className='-translate-x-5 w-[70px] h-[70px]' animationData={InsiderLoadingWhite} loop={true}/></span> : 'Sign In'}
             </Button>
           </form>
           <p className="text-sm font-normal leading-[18px] tracking-tight text-grey-600">
@@ -129,7 +137,9 @@ const SignIn = () => {
               className="flex items-center w-full justify-center h-full gap-x-1"
             >
               <Image src="icons/google.svg" alt="google" width={24} height={24} />
-              <span className="text-base-black text-sm font-normal leading-[18px] tracking-tight">Google</span>
+              <span className="text-base-black text-sm font-normal leading-[18px] tracking-tight">
+                Google
+              </span>
             </Link>
           </Button>
         </div>

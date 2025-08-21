@@ -19,6 +19,9 @@ import {
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/stores';
 import { useEffect } from 'react';
+import InsiderLoadingWhite from "@/public/lotties/InsiderLoadingWhite.json"
+import Lottie from 'lottie-react';
+
 
 const formSchema = z.object({
   otp: z.string().min(6, 'Please enter the complete 6-digit OTP'),
@@ -26,7 +29,7 @@ const formSchema = z.object({
 
 const verifyOTP = () => {
   const router = useRouter();
-  const { verifyOTP, forgotPassword, fetchUser } = useAuth();
+  const { verifyOTP, forgotPassword, fetchUser, isUserLoading } = useAuth();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -115,9 +118,11 @@ const verifyOTP = () => {
             />
             <Button
               type="submit"
+              disabled={isUserLoading}
               className="w-full h-[42px] rounded-[6px] mt-1.5 bg-base-black text-sm font-normal leading-[18px] tracking-tight text-base-white cursor-pointer"
             >
-              Verify Code
+              
+              {isUserLoading ? <span className='flex items-center translate-x-5'>Verifying Code<Lottie className='-translate-x-5 w-[70px] h-[70px]' animationData={InsiderLoadingWhite} loop={true}/></span> : 'Verify Code'}
             </Button>
           </form>
           <p className="text-sm font-normal leading-[18px] tracking-tight text-grey-600">

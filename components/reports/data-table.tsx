@@ -39,13 +39,17 @@ import { ChevronDown } from 'lucide-react';
 import DateTime from '../DateTime';
 import { DateRangePicker } from '../ui/date-range-picker';
 import { exportToCSV, exportToExcel, exportToPDF } from '@/lib/exportUtils';
+import Lottie from 'lottie-react';
+import TrailLoading from '@/public/lotties/TrailLoading.json';
+
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  loading: boolean;
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, loading }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -172,7 +176,15 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                 ))}
               </TableHeader>
               <TableBody className="">
-                {table.getRowModel().rows?.length ? (
+                {loading ? <TableRow>
+                    <TableCell colSpan={columns.length} className="">
+                      <Lottie
+                        className="w-20 h-20 mx-auto"
+                        animationData={TrailLoading}
+                        loop={true}
+                      />
+                    </TableCell>
+                  </TableRow>  : table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
                     <TableRow
                       key={row.id}

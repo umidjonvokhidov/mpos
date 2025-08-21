@@ -12,6 +12,8 @@ import { useCart } from '@/stores';
 import { ScrollArea } from './ui/scroll-area';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Lottie from 'lottie-react';
+import TrailLoading from '@/public/lotties/TrailLoading.json';
 
 const formSchema = z.object({
   typeService: z.enum(['Delivery', 'Take Away', 'Dine In']),
@@ -28,6 +30,7 @@ const Cart = () => {
     checkoutCart,
     confirmCartProperties,
     setCartProperties,
+    isCartLoading,
   } = useCart();
   const [editMode, setEditMode] = useState(false);
   const router = useRouter();
@@ -211,6 +214,9 @@ const Cart = () => {
         </div>
         <hr className="border border-grey-100" />
         <ScrollArea className="h-full overflow-hidden mb-8 pr-4">
+          {isCartLoading && (
+            <Lottie className="w-20 h-20 mx-auto" animationData={TrailLoading} loop={true} />
+          )}
           <div className="flex flex-col gap-y-3">
             {cart?.products.length! > 0 ? (
               cart?.products.map(({ count, productId }: CartProduct) => {

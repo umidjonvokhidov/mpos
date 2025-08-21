@@ -15,20 +15,16 @@ import Lottie from 'lottie-react';
 import { useRouter } from 'next/navigation';
 import { formatDateWithTime } from '@/lib/dateUtils';
 import { Button } from '@/components/ui/button';
+import SuccessCheck from '@/public/lotties/SuccessCheck.json';
+
 
 const Products = () => {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
-  const [animationData, setAnimationData] = useState(null);
   const [orderDetails, setOrderDetails] = useState<Record<string, string> | null>(null);
   const { getTransaction } = useTransaction();
   const router = useRouter();
 
-  useEffect(() => {
-    fetch('/lotties/SuccessCheck.json')
-      .then((res) => res.json())
-      .then((data) => setAnimationData(data));
-  }, []);
 
   const transactionId = new URLSearchParams(window.location.search).get('transactionId');
 
@@ -70,7 +66,7 @@ const Products = () => {
             <DialogHeader>
               <DialogTitle className="flex flex-col items-center">
                 <Lottie
-                  animationData={animationData}
+                  animationData={SuccessCheck}
                   loop={false}
                   autoPlay={true}
                   color="#0EBE1F"

@@ -6,7 +6,7 @@ import { DataTable } from './data-table';
 import { useEffect } from 'react';
 
 const Reports = () => {
-  const { transactions, fetchUserTransactions } = useTransaction();
+  const { transactions, fetchUserTransactions, isTransactionLoading } = useTransaction();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -23,6 +23,7 @@ const Reports = () => {
       <DataTable
         columns={columns}
         data={transactions.filter((value) => value.status === 'completed')}
+        loading={isTransactionLoading}
       />
     )
   );

@@ -12,6 +12,7 @@ import {
   getPaginationRowModel,
 } from '@tanstack/react-table';
 import { useState } from 'react';
+import TrailLoading from '@/public/lotties/TrailLoading.json';
 
 import {
   Table,
@@ -28,13 +29,19 @@ import Image from 'next/image';
 import { Input } from '../ui/input';
 import { DataTablePagination } from './DataTablePagination';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
+import Lottie from 'lottie-react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  loading: boolean;
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+  loading,
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -138,7 +145,17 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                 ))}
               </TableHeader>
               <TableBody className="">
-                {table.getRowModel().rows?.length ? (
+                {loading ? (
+                  <TableRow>
+                    <TableCell colSpan={columns.length} className="">
+                      <Lottie
+                        className="w-20 h-20 mx-auto"
+                        animationData={TrailLoading}
+                        loop={true}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ) : table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
                     <TableRow
                       key={row.id}

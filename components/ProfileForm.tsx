@@ -19,6 +19,7 @@ import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import { useAuth } from '@/stores';
 import { ScrollArea } from './ui/scroll-area';
+import InsiderLoadingWhite from '@/public/lotties/InsiderLoadingWhite.json';
 import Image from 'next/image';
 import {
   Dialog,
@@ -27,6 +28,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import Lottie from 'lottie-react';
 
 const formSchema = z
   .object({
@@ -61,10 +63,7 @@ const formSchema = z
       .min(5, {
         message: 'Email must be at least 5 characters.',
       }),
-    profilePicture: z
-      .any()
-      .optional()
-      .or(z.literal(undefined)),
+    profilePicture: z.any().optional().or(z.literal(undefined)),
     phoneNumber: z
       .string()
       .min(10, {
@@ -107,7 +106,7 @@ const formSchema = z
 const ProfileForm = () => {
   const [open, setOpen] = useState(false);
   const [passwordFieldDisabled, setPasswordFieldDisabled] = useState(true);
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, isUserLoading } = useAuth();
   const [preview, setPreview] = useState<string | undefined>(
     user?.profilePicture ? user.profilePicture : '/images/avatar.jpg',
   );
@@ -136,7 +135,7 @@ const ProfileForm = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <div className="lg:flex w-full">
-        <DialogTrigger asChild className='w-full'>
+        <DialogTrigger asChild className="w-full">
           <button className="block w-full lg:w-auto lg:flex items-center justify-center text-base-white py-2.5 px-6 border cursor-pointer border-grey-900 rounded-[6px] bg-transparent h-auto">
             Edit Profile
           </button>
@@ -386,9 +385,21 @@ const ProfileForm = () => {
                     </Button>
                     <Button
                       type="submit"
-                      className="h-auto rounded-[6px] flex-1 lg:flex-none px-6 py-2.5 cursor-pointer w-full lg:w-auto"
+                      disabled={isUserLoading}
+                      className="h-10 rounded-[6px] flex-1 lg:flex-none px-6 py-2.5 cursor-pointer w-full lg:w-auto"
                     >
-                      Save Changes
+                      {isUserLoading ? (
+                        <span className="flex items-center translate-x-5">
+                          Saving Changes
+                          <Lottie
+                            className="-translate-x-5 w-[70px] h-[70px]"
+                            animationData={InsiderLoadingWhite}
+                            loop={true}
+                          />
+                        </span>
+                      ) : (
+                        'Save Changes'
+                      )}
                     </Button>
                   </div>
                 </div>

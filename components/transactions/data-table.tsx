@@ -18,7 +18,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/TransactionSuccessDialog';
 
 import {
@@ -39,8 +38,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ChevronDown } from 'lucide-react';
@@ -49,17 +46,28 @@ import { exportToCSV, exportToExcel, exportToPDF } from '@/lib/exportUtils';
 import { twMerge } from 'tailwind-merge';
 import { Button } from '../ui/button';
 import { formatDateWithTime } from '@/lib/dateUtils';
+import Lottie from 'lottie-react';
+import TrailLoading from '@/public/lotties/TrailLoading.json';
+import { useAuthStore } from '@/stores/auth.store';
+import { useTransactionStore } from '@/stores/transaction.store';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  loading: boolean;
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+  loading,
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [orderDetails, setOrderDetails] = useState<Record<string, string> | null>(null);
   const [open, setOpen] = useState(false);
+  const { user } = useAuthStore();
+  const { isTransactionLoading, updateTransactionStatus } = useTransactionStore();
 
   const table = useReactTable({
     data,
@@ -75,6 +83,30 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
       columnFilters,
     },
   });
+
+  const onDecline = async () => {
+    const id = orderDetails && orderDetails['Transaction ID'];
+
+    if (id) {
+      const status = await updateTransactionStatus(id, 'declined');
+
+      if (status) {
+        setOpen(false);
+      }
+    }
+  };
+
+  const onApprove = async () => {
+    const id = orderDetails && orderDetails['Transaction ID'];
+
+    if (id) {
+      const status = await updateTransactionStatus(id, 'completed');
+
+      if (status) {
+        setOpen(false);
+      }
+    }
+  };
 
   return (
     <div className="flex flex-col gap-3 border border-grey-100 p-2.5 rounded-[6px] h-full overflow-hidden">
@@ -158,7 +190,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         </div>
       </div>
       <Dialog open={open}>
-        <DialogContent>
+        <DialogContent onInteractOutside={() => setOpen(false)}>
           <DialogHeader className="flex justify-center w-full">
             <DialogTitle className="flex flex-col items-center gap-y-[30px]">
               <Image src="/images/logo-light.svg" width={81} height={30} alt="logo" />
@@ -200,20 +232,39 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                     ))}
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-x-3 items-center">
-                <Button
-                  className="h-9 border border-base-black hover:bg-base-white cursor-pointer rounded-[6px] bg-base-white hover:opacity-50 text-base-black"
-                  onClick={() => setOpen(false)}
-                >
-                  Receive
-                </Button>
-                <Button
-                  onClick={() => setOpen(false)}
-                  className="h-9 border-base-black border cursor-pointer rounded-[6px] bg-base-black text-base-white"
-                >
-                  Okay
-                </Button>
-              </div>
+              {user?.role === 'waiter' || orderDetails && orderDetails.Status !== "pending" ? (
+                <div className="grid grid-cols-2 gap-x-3 items-center">
+                  <Button
+                    className="h-9 border border-base-black hover:bg-base-white cursor-pointer rounded-[6px] bg-base-white hover:opacity-50 text-base-black"
+                    onClick={() => setOpen(false)}
+                  >
+                    Receive
+                  </Button>
+                  <Button
+                    onClick={() => setOpen(false)}
+                    className="h-9 border-base-black border cursor-pointer rounded-[6px] bg-base-black text-base-white"
+                  >
+                    Okay
+                  </Button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-x-3 items-center">
+                  <Button
+                    className="h-9 border border-error-600 bg-transparent hover:bg-error-50 cursor-pointer rounded-[6px] hover:opacity-50 text-error-600"
+                    onClick={onDecline}
+                    disabled={isTransactionLoading}
+                  >
+                    Decline
+                  </Button>
+                  <Button
+                    onClick={onApprove}
+                    disabled={isTransactionLoading}
+                    className="h-9 border-success-600 border bg-transparent cursor-pointer hover:bg-success-50 rounded-[6px]  text-success-600"
+                  >
+                    Approve
+                  </Button>
+                </div>
+              )}
             </div>
           </DialogHeader>
         </DialogContent>
@@ -245,7 +296,17 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                 ))}
               </TableHeader>
               <TableBody className="">
-                {table.getRowModel().rows?.length ? (
+                {loading ? (
+                  <TableRow>
+                    <TableCell colSpan={columns.length} className="">
+                      <Lottie
+                        className="w-20 h-20 mx-auto"
+                        animationData={TrailLoading}
+                        loop={true}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ) : table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
                     <TableRow
                       key={row.id}

@@ -4,10 +4,9 @@ import { useAuth, useTransaction } from '@/stores';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 import { useEffect } from 'react';
-import { table } from 'console';
 
 const RecentTransactions = () => {
-  const { transactions, fetchUserTransactions } = useTransaction();
+  const { transactions, fetchUserTransactions, isTransactionLoading } = useTransaction();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -19,7 +18,7 @@ const RecentTransactions = () => {
 
     fetchData();
   }, []);
-  return transactions && <DataTable columns={columns} data={transactions} />;
+  return transactions && <DataTable columns={columns} data={transactions} loading={isTransactionLoading} />;
 };
 
 export default RecentTransactions;

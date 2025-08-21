@@ -24,6 +24,8 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/stores';
+import InsiderLoadingWhite from '@/public/lotties/InsiderLoadingWhite.json';
+import Lottie from 'lottie-react';
 
 const formSchema = z.object({
   language: z.enum(['en', 'ru', 'uz']),
@@ -51,7 +53,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const SettingsPage = () => {
-  const { user, updateUserSettings } = useAuth();
+  const { user, updateUserSettings, isUserLoading } = useAuth();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -275,8 +277,19 @@ const SettingsPage = () => {
 
               {/* Submit Button */}
               <div className="flex justify-end pt-4">
-                <Button type="submit" className="px-8">
-                  Save Settings
+                <Button type="submit" className="px-8" disabled={isUserLoading}>
+                  {isUserLoading ? (
+                    <span className="flex items-center translate-x-5">
+                      Saving Settings
+                      <Lottie
+                        className="-translate-x-5 w-[70px] h-[70px]"
+                        animationData={InsiderLoadingWhite}
+                        loop={true}
+                      />
+                    </span>
+                  ) : (
+                    'Save Settings'
+                  )}
                 </Button>
               </div>
             </div>

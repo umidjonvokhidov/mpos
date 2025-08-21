@@ -20,7 +20,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   const [open, setOpen] = useState(false);
   const { updateProduct } = useProduct();
   const { user } = useAuth();
-  const { addToCart, cart, removeFromCart } = useCart();
+  const { addToCart, cart, removeFromCart, isCartLoading } = useCart();
 
   const handleSubmit = async (values: ProductFormValues) => {
     console.log(values);
@@ -91,6 +91,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           <div className="p-1 rounded-[8px] bg-neutral-grey-100 flex items-center justify-between">
             <Button
               className="p-2 rounded-[8px] cursor-pointer"
+              disabled={isCartLoading}
               onClick={() => removeProductFromCart(product._id)}
             >
               <Image src={icons.min} alt="minus" width={20} height={20} />
@@ -107,6 +108,7 @@ const ProductCard = ({ product }: { product: Product }) => {
             <Button
               className="p-2 rounded-[8px] cursor-pointer"
               onClick={() => addProductToCart(product._id)}
+              disabled={isCartLoading}
             >
               <Image src={icons.plusWhite} alt="minus" width={20} height={20} />
             </Button>
