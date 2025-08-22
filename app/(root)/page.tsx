@@ -1,6 +1,14 @@
 import RecentTransactions from '@/components/recent-transactions/RecentTransactions';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import Statistics from '@/sections/Statistics';
+import type { Metadata } from 'next';
+
+
+export const metadata: Metadata = {
+  title: 'MPos',
+  description:
+    'A modern, user-friendly point of sale (POS) system for efficient product management, sales tracking, and business reporting.',
+};
 
 const Dashboard = () => {
   return (
