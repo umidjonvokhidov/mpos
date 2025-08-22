@@ -72,9 +72,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'MPos',
+  title: {
+    default: 'BazPay',
+    template: '%s - BazPay',
+  },
   description:
     'A modern, user-friendly point of sale (POS) system for efficient product management, sales tracking, and business reporting.',
+  twitter: {
+    card: 'summary_large_image',
+  },
 };
 
 const GlobalLayout = ({
