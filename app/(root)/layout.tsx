@@ -1,5 +1,6 @@
 'use client';
 
+import type { Metadata } from 'next';
 import { useAuth, useCart, useNotification, useProduct, useUI } from '@/stores';
 import Loading from '../loading';
 import { useRouter } from 'next/navigation';
@@ -7,6 +8,12 @@ import { useEffect } from 'react';
 import { toast } from 'sonner';
 import React from 'react';
 import Navbar from '@/components/Navbar';
+
+export const metadata: Metadata = {
+  title: 'MPos',
+  description:
+    'A modern, user-friendly point of sale (POS) system for efficient product management, sales tracking, and business reporting.',
+};
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const router = useRouter();
