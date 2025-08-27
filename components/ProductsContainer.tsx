@@ -28,7 +28,6 @@ import {
 import Lottie from 'lottie-react';
 import TrailLoading from '@/public/lotties/TrailLoading.json';
 
-
 export enum Categories {
   All = 'All',
   Drink = 'Drink',
@@ -136,29 +135,33 @@ const ProductsContainer = () => {
           )}
         </div>
       </div>
-      <ScrollArea className="w-full h-full overflow-hidden pr-4">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {isProductLoading ? <Lottie className="w-20 h-20 mx-auto" animationData={TrailLoading} loop={true} /> : products && products.length > 0 ? (
-            products
-              .filter((p) => (filter !== '' ? p.category === filter : true))
-              .filter((p) =>
-                search !== ''
-                  ? p.name
-                      .replace(/[\t ]{2,}/g, ' ')
-                      .toLowerCase()
-                      .includes(
-                        search
-                          .replace(/[\t ]{2,}/g, ' ')
-                          .trim()
-                          .toLowerCase(),
-                      )
-                  : true,
-              )
-              .map((product: Product) => <ProductCard key={product._id} product={product} />)
-          ) : (
-            <span>Products not found!</span>
-          )}
-        </div>
+      <ScrollArea className="w-full h-full overflow-hidden pr-4 flex justify-center items-center">
+        {isProductLoading ? (
+          <Lottie className="w-20 h-20 mx-auto" animationData={TrailLoading} loop={true} />
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full">
+            {products && products.length > 0 ? (
+              products
+                .filter((p) => (filter !== '' ? p.category === filter : true))
+                .filter((p) =>
+                  search !== ''
+                    ? p.name
+                        .replace(/[\t ]{2,}/g, ' ')
+                        .toLowerCase()
+                        .includes(
+                          search
+                            .replace(/[\t ]{2,}/g, ' ')
+                            .trim()
+                            .toLowerCase(),
+                        )
+                    : true,
+                )
+                .map((product: Product) => <ProductCard key={product._id} product={product} />)
+            ) : (
+              <span>Products not found!</span>
+            )}
+          </div>
+        )}
       </ScrollArea>
     </div>
   );
