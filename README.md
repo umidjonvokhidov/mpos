@@ -1,81 +1,87 @@
 # MPOS (Modern Point of Sale)
 
-MPOS is a modern, efficient Point of Sale (POS) system built with Next.js and TypeScript. Designed for scalability, intuitive UI/UX, and high performance, MPOS is ideal for businesses seeking a robust and user-friendly POS solution.
+![MPOS Thumbnail](./app/opengraph-image.png)
 
-## Features
+MPOS is a modern, scalable Point of Sale system built with Next.js and TypeScript—optimized for businesses seeking a robust, performant, and intuitive POS solution.
 
-- **Modern Tech Stack**: Built with Next.js, TypeScript, and React for high performance and scalability.
-- **Intuitive Design**: Clean and user-friendly interface, ensuring ease of use.
-- **Customizable**: Easily adaptable to various business needs.
-- **Lightweight**: Optimized for speed and efficiency.
+## 🛠️ Tech Stack
 
-## Getting Started
+- **Frontend:** Next.js, React, TypeScript, CSS
+- **Backend:** Next.js API routes
+- **Other:** Component-based design, rapid delivery focus
 
-Follow these steps to set up and run MPOS locally:
+## 🚀 Features
 
-### Prerequisites
+- Clean, intuitive, and responsive UI/UX
+- High-performance and scalable architecture
+- Easily customizable for various retail and restaurant business needs
+- Modern codebase using the latest features of TypeScript and React
 
-Ensure you have the following installed:
+## 📦 Project Structure
 
-- [Node.js](https://nodejs.org/) (v16 or higher recommended)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+```
+.
+├── app/                # Main application pages, layouts, loading states, global styles
+│   ├── (root)/         # Root-level routes (e.g., dashboard)
+│   ├── layout.tsx      # Global layout and metadata
+│   ├── loading.tsx     # App loading screen
+│   └── globals.css     # Main global CSS (Tailwind, custom themes)
+├── public/             # Static files, images, fonts
+│   └── fonts/          # Satoshi font files
+├── components/         # Reusable React components (UI, features)
+│   └── ui/             # UI primitives (form, label, etc.)
+├── lib/                # Library utilities (e.g., axios instance, helpers)
+│   └── utils.ts        # Utility functions (class names, API clients)
+├── stores/             # Zustand stores for state management (auth, UI, products, cart, notifications, transactions)
+├── types/              # TypeScript type definitions (cart, user, index, etc.)
+├── styles/             # Additional global and component styles
+├── tsconfig.json       # TypeScript configuration
+├── next.config.js      # Next.js configuration
+├── package.json        # Project metadata and dependencies
+```
 
-### Installation
+- The OpenGraph image for repo/social previews is located at: `./app/opengraph-image.png`
+- Utilities and state management are centralized in `lib/` and `stores/`
+- Types are organized in the `types/` directory for strong typing and scalability
 
-1. Clone the repository:
+For more details, refer to the official repo on [GitHub](https://github.com/umidjonvokhidov/mpos).
 
+## 🖼 OpenGraph Image
+
+This repository includes an `opengraph-image.png` (or similar file) in the root or public directory, used for rich previews on social platforms and as a project thumbnail.
+
+## 🏁 Getting Started
+
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/umidjonvokhidov/mpos.git
    cd mpos
    ```
 
-2. Install dependencies:
-
+2. **Install dependencies:**
    ```bash
    npm install
    # or
    yarn install
    ```
 
-3. Start the development server:
-
+3. **Run the development server:**
    ```bash
    npm run dev
    # or
    yarn dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.
+4. Visit [http://localhost:3000](http://localhost:3000) to view the app.
 
-## Folder Structure
+## 📄 License
 
-The basic structure of the project is as follows:
+This project is licensed under the MIT License.
 
-```
-.
-├── app/                # Application pages and components
-├── public/             # Static files
-├── styles/             # Global styles
-├── utils/              # Utility functions
-├── tsconfig.json       # TypeScript configuration
-├── next.config.js      # Next.js configuration
-└── package.json        # Project metadata and dependencies
-```
+## 👤 Author
 
-## Contributing
+[Umidjon Vokhidov](https://github.com/umidjonvokhidov)
 
-Contributions are welcome! Please follow these steps:
+---
 
-1. Fork the repository.
-2. Create a feature branch: `git checkout -b feature-name`.
-3. Commit your changes: `git commit -m 'Add feature'`.
-4. Push to the branch: `git push origin feature-name`.
-5. Open a pull request.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-For questions or support, please contact [Umidjon Vokhidov](https://github.com/umidjonvokhidov).
+> Pro Developer Tip: To further enhance your repo’s discoverability, consider adding a full project description, setup instructions for production deployments, and screenshots or GIFs demonstrating the workflow. Reference the [Next.js Documentation](https://nextjs.org/docs) for advanced configuration and deployment tips.
