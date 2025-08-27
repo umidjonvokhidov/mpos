@@ -31,6 +31,7 @@ const danger = '/icons/Danger.svg';
 const dashboard1 = '/icons/Dashboard 1.svg';
 const dashboard2 = '/icons/Dashboard 2.svg';
 const defaultIcon = '/icons/Default.svg';
+const trashWhite = '/icons/TrashWhite.svg';
 const dolar = '/icons/Dolar.svg';
 const hamburger = '/icons/Hamburger.svg';
 const hide = '/icons/Hide.svg';
@@ -102,6 +103,7 @@ const icons = {
   x,
   notificationDot,
   image,
+  trashWhite
 };
 
 export default icons;

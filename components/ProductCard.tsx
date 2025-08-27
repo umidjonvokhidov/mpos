@@ -18,7 +18,7 @@ import ProductDialogForm from './ProductDialogForm';
 const ProductCard = ({ product }: { product: Product }) => {
   const { image, name, price, stock, category } = product;
   const [open, setOpen] = useState(false);
-  const { updateProduct } = useProduct();
+  const { updateProduct, deleteProduct } = useProduct();
   const { user } = useAuth();
   const { addToCart, cart, removeFromCart, isCartLoading } = useCart();
 
@@ -114,25 +114,28 @@ const ProductCard = ({ product }: { product: Product }) => {
             </Button>
           </div>
         ) : (
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger className="flex items-center gap-x-1.5 cursor-pointer">
-              <span className="p-2 text-base-white bg-base-black w-full rounded-[8px] cursor-pointer">
-                Update Product
-              </span>
-            </DialogTrigger>
-            <DialogContent className="p-2.5">
-              <DialogHeader>
-                <DialogTitle>Update Product</DialogTitle>
-                <DialogDescription>
-                  Update the product details below to modify this product in your inventory.
-                </DialogDescription>
-                <ProductDialogForm
-                  handleSubmit={handleSubmit}
-                  defaultValues={{ imageUrl: image, name, price, stock, category }}
-                />
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
+          <div className="flex items-center w-full gap-x-1.5">
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogTrigger className="flex items-center gap-x-1.5 cursor-pointer w-full">
+                <span className="p-2 text-base-white bg-base-black w-full rounded-[8px] cursor-pointer hover:opacity-80 hover:bg-base-black/90">
+                  Update Product
+                </span>
+              </DialogTrigger>
+              <DialogContent className="p-2.5">
+                <DialogHeader>
+                  <DialogTitle>Update Product</DialogTitle>
+                  <DialogDescription>
+                    Update the product details below to modify this product in your inventory.
+                  </DialogDescription>
+                  <ProductDialogForm
+                    handleSubmit={handleSubmit}
+                    defaultValues={{ imageUrl: image, name, price, stock, category }}
+                  />
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+            <Button className='p-2 rounded-[8px] cursor-pointer h-full bg-base-black hover:bg-base-black/90 transition-all' onClick={async () => await deleteProduct(product._id)}><Image src={icons.trashWhite} alt="delete" width={20} height={20} className='' /></Button>
+          </div>
         )}
       </div>
     </div>
